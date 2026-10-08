@@ -8,7 +8,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=block">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=campaign,celebration,flight,groups,handshake,hub,inventory_2,live_tv,local_pharmacy,payments,public,storefront,verified&display=block">
+<script src="config.js"></script>
+<script>
+  /* config.js 의 색상·아이콘을 페이지에 적용 */
+  (() => {
+    const C = window.CONFIG, col = C.colors;
+    const rgb = h => { const x = h.replace("#", ""); return [0, 2, 4].map(i => parseInt(x.slice(i, i + 2), 16)).join(","); };
+    window.CONFIG_RGB = { yellow: rgb(col.yellow), yellowLight: rgb(col.yellowLight), yellowDeep: rgb(col.yellowDeep), ink: rgb(col.ink) };
+    const root = document.documentElement.style;
+    [["--black", col.black], ["--ink", col.ink], ["--gray", col.gray], ["--light", col.light], ["--white", col.white],
+     ["--y1", col.yellowLight], ["--y2", col.yellow], ["--y3", col.yellowDeep],
+     ["--y1-rgb", CONFIG_RGB.yellowLight], ["--y2-rgb", CONFIG_RGB.yellow], ["--y3-rgb", CONFIG_RGB.yellowDeep], ["--ink-rgb", CONFIG_RGB.ink]]
+      .forEach(([k, v]) => root.setProperty(k, v));
+    const icons = new Set([...C.purchase.cards, ...C.channels.list, ...C.summary.tiles].map(x => x.icon).filter(Boolean));
+    const link = document.createElement("link"); link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=" + [...icons].sort().join(",") + "&display=block";
+    document.head.appendChild(link);
+  })();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <style>
   :root {
@@ -55,15 +72,15 @@
   .sweep {
     position: absolute; top: 50%; width: 3px; height: 150%; transform: translate(-50%, -50%);
     background: var(--y2); border-radius: 3px; opacity: 0;
-    box-shadow: 0 0 24px 6px rgba(241,235,156,.55), 0 0 80px 20px rgba(241,235,156,.25);
+    box-shadow: 0 0 24px 6px rgba(var(--y2-rgb),.55), 0 0 80px 20px rgba(var(--y2-rgb),.25);
   }
 
   /* aurora */
   #aurora { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
   #aurora i { position: absolute; border-radius: 50%; filter: blur(140px); }
-  #aurora .a1 { width: 900px; height: 700px; left: 360px; top: 380px; background: rgba(241,235,156,.42); }
-  #aurora .a2 { width: 700px; height: 600px; left: 980px; top: 200px; background: rgba(226,212,108,.30); }
-  #aurora .a3 { width: 600px; height: 500px; left: 700px; top: 620px; background: rgba(251,248,225,.20); }
+  #aurora .a1 { width: 900px; height: 700px; left: 360px; top: 380px; background: rgba(var(--y2-rgb),.42); }
+  #aurora .a2 { width: 700px; height: 600px; left: 980px; top: 200px; background: rgba(var(--y3-rgb),.30); }
+  #aurora .a3 { width: 600px; height: 500px; left: 700px; top: 620px; background: rgba(var(--y1-rgb),.20); }
 
   /* S1 */
   #s1 .lock-wrap { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; }
@@ -94,7 +111,7 @@
   #s4 .h1 { top: 170px; font-size: 80px; }
   #s4 svg.rings { position: absolute; inset: 0; width: 1920px; height: 1080px; }
   #s4 .core { position: absolute; left: 960px; top: 660px; transform: translate(-50%, -50%); }
-  #s4 .glow { position: absolute; left: 960px; top: 660px; width: 520px; height: 420px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(241,235,156,.35); filter: blur(90px); }
+  #s4 .glow { position: absolute; left: 960px; top: 660px; width: 520px; height: 420px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(var(--y2-rgb),.35); filter: blur(90px); }
   #s4 .node { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; will-change: transform, opacity; }
   #s4 .bubble {
     width: 128px; height: 128px; border-radius: 50%; display: grid; place-items: center;
@@ -106,13 +123,13 @@
 
   /* S5 */
   #s5 { background: var(--ygrad); color: var(--ink); background-size: 200% 200%; }
-  #s5 .eyebrow { top: 210px; color: rgba(29,29,31,.6); }
+  #s5 .eyebrow { top: 210px; color: rgba(var(--ink-rgb),.6); }
   #s5 .stats { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; align-items: flex-start; gap: 0; }
   #s5 .stat { width: 800px; text-align: center; }
   #s5 .num { font-family: "Inter Tight", sans-serif; font-weight: 700; font-size: 250px; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
   #s5 .lab { margin-top: 28px; font-size: 48px; font-weight: 700; letter-spacing: -0.03em; }
-  #s5 .lab .en { font-size: 30px; font-weight: 500; color: rgba(29,29,31,.55); margin-left: 12px; letter-spacing: -0.01em; }
-  #s5 .div { width: 2px; height: 340px; margin-top: 20px; background: rgba(29,29,31,.25); transform-origin: 50% 0; }
+  #s5 .lab .en { font-size: 30px; font-weight: 500; color: rgba(var(--ink-rgb),.55); margin-left: 12px; letter-spacing: -0.01em; }
+  #s5 .div { width: 2px; height: 340px; margin-top: 20px; background: rgba(var(--ink-rgb),.25); transform-origin: 50% 0; }
 
   /* S6 */
   #s6 canvas { position: absolute; inset: 0; width: 1920px; height: 1080px; }
@@ -164,26 +181,22 @@
   <!-- 1 · Opening -->
   <section class="scene" id="s1">
     <div class="lock-wrap"><div class="lockup" data-w="1180"><i class="sweep"></i></div></div>
-    <p class="center eyebrow">Beauty Distribution Network</p>
-    <p class="center ko">화장품 · 건강기능식품 · 웰니스</p>
+    <p class="center eyebrow" data-text="opening.tagline"></p>
+    <p class="center ko" data-text="opening.sub"></p>
   </section>
 
   <!-- 2 · Statement -->
   <section class="scene" id="s2">
-    <p class="center h1 l1"><span class="w">광고비는</span> <span class="w">멈추면</span> <span class="w">사라집니다.</span></p>
-    <p class="center h1 l2"><span class="w">채널은</span> <span class="w grad">남습니다.</span></p>
-    <p class="center sub en">Ads fade. Channels stay.</p>
+    <p class="center h1 l1" data-rich="message.line1"></p>
+    <p class="center h1 l2" data-rich="message.line2"></p>
+    <p class="center sub en" data-text="message.sub"></p>
   </section>
 
   <!-- 3 · Direct purchase -->
   <section class="scene" id="s3">
-    <p class="center eyebrow">Direct Purchase</p>
-    <p class="center h1"><span class="w">뷰티오라는</span> <span class="w">상품을</span><br><span class="w">직접</span> <span class="w">매입합니다.</span></p>
-    <div class="cards">
-      <div class="card"><div class="ic"><span class="ms">payments</span></div><b>즉시 매출</b><span class="en">Instant revenue</span></div>
-      <div class="card"><div class="ic"><span class="ms">inventory_2</span></div><b>재고 리스크 분담</b><span class="en">Shared inventory risk</span></div>
-      <div class="card"><div class="ic"><span class="ms">hub</span></div><b>채널 분산 판매</b><span class="en">Multi-channel sales</span></div>
-    </div>
+    <p class="center eyebrow" data-text="purchase.eyebrow"></p>
+    <p class="center h1" data-rich="purchase.title"></p>
+    <div class="cards"></div>
   </section>
 
   <!-- 4 · Channel orbit -->
@@ -195,48 +208,37 @@
     <div class="glow"></div>
     <div class="core"><div class="lockup sym-only" data-w="200" data-sym-only></div></div>
     <div id="nodes"></div>
-    <p class="center eyebrow grad" style="display:block;width:max-content;margin:0 auto">Channel Network</p>
-    <p class="center h1"><span class="w">오프라인은 판매,</span> <span class="w grad">온라인은 확산.</span></p>
+    <p class="center eyebrow grad" style="display:block;width:max-content;margin:0 auto" data-text="channels.eyebrow"></p>
+    <p class="center h1" data-rich="channels.title"></p>
   </section>
 
   <!-- 5 · Numbers -->
   <section class="scene" id="s5">
-    <p class="center eyebrow">Our Network</p>
-    <div class="stats">
-      <div class="stat"><div class="num"><span id="n1">0</span>+</div><div class="lab">브랜드<span class="en">Brands</span></div></div>
-      <div class="div"></div>
-      <div class="stat"><div class="num"><span id="n2">0</span>+</div><div class="lab">상품<span class="en">Products</span></div></div>
-    </div>
+    <p class="center eyebrow" data-text="numbers.eyebrow"></p>
+    <div class="stats"></div>
   </section>
 
   <!-- 6 · Global -->
   <section class="scene" id="s6">
     <canvas id="globe" width="1920" height="1080"></canvas>
-    <p class="eyebrow grad">Global</p>
-    <p class="h1"><span class="w">국내에서</span><br><span class="w grad">해외까지.</span></p>
-    <p class="sub">일본 · 중국 · 홍콩 · 대만 · 미국 · 유럽</p>
+    <p class="eyebrow grad" data-text="global.eyebrow"></p>
+    <p class="h1" data-rich="global.title"></p>
+    <p class="sub" data-text="global.sub"></p>
   </section>
 
   <!-- 7 · Bento recap -->
   <section class="scene" id="s7">
     <div class="bg"></div>
-    <p class="center eyebrow">All in One</p>
-    <p class="center h1"><span class="w">브랜드와 채널 사이,</span> <span class="w">뷰티오라.</span></p>
-    <div class="grid">
-      <div class="tile dark wide"><span class="ms grad">handshake</span><div><b>상품을 직접 매입합니다</b><small>Direct purchase</small></div></div>
-      <div class="tile yel"><div class="big">200+</div><div><b>브랜드</b><small>Brands</small></div></div>
-      <div class="tile"><div class="big">800+</div><div><b>상품</b><small>Products</small></div></div>
-      <div class="tile"><span class="ms">storefront</span><div><b>오프라인 판매</b><small>Offline sales</small></div></div>
-      <div class="tile"><span class="ms">campaign</span><div><b>온라인 확산</b><small>Online reach</small></div></div>
-      <div class="tile wide"><span class="ms">public</span><div><b>국내에서 해외까지</b><small>Korea · Japan · China · Hong Kong · Taiwan · USA · Europe</small></div></div>
-    </div>
+    <p class="center eyebrow" data-text="summary.eyebrow"></p>
+    <p class="center h1" data-rich="summary.title"></p>
+    <div class="grid"></div>
   </section>
 
   <!-- 8 · End -->
   <section class="scene" id="s8">
     <div class="lock-wrap"><div class="lockup" data-w="1100"></div></div>
-    <p class="center tag">브랜드와 채널 사이를 설계합니다.</p>
-    <p class="center eyebrow">Beauty Distribution Network</p>
+    <p class="center tag" data-text="ending.tagline"></p>
+    <p class="center eyebrow" data-text="ending.sub"></p>
   </section>
 </div>
 
@@ -244,6 +246,7 @@
 
 <script>
 (() => {
+  const CFG = window.CONFIG;
   const W = 1920, H = 1080, TAU = Math.PI * 2, D2R = Math.PI / 180;
   const q = new URLSearchParams(location.search);
   if (q.has('record')) document.body.classList.add('record');
@@ -252,6 +255,30 @@
   const stage = document.getElementById('stage');
   const fitStage = () => { const s = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `scale(${s}) translate(-50%, -50%)`; };
   addEventListener('resize', fitStage); fitStage();
+
+  /* ---------- content from config.js ---------- */
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const get = path => path.split('.').reduce((o, k) => o[k], CFG);
+  // "채널은 [남습니다.]" → word spans; [ ] = yellow gradient, \n = line break
+  const rich = str => String(str).split('\n').map(line => (line.match(/\[[^\]]+\]|\S+/g) || [])
+    .map(tok => tok.startsWith('[') ? `<span class="w grad">${esc(tok.slice(1, -1))}</span>` : `<span class="w">${esc(tok)}</span>`).join(' ')).join('<br>');
+  document.querySelectorAll('[data-text]').forEach(el => { el.textContent = get(el.dataset.text); });
+  document.querySelectorAll('[data-rich]').forEach(el => { el.innerHTML = rich(get(el.dataset.rich)); });
+  const ms = (name, cls = '') => `<span class="ms ${cls}">${esc(name)}</span>`;
+
+  document.querySelector('#s3 .cards').innerHTML = CFG.purchase.cards.map(c =>
+    `<div class="card"><div class="ic">${ms(c.icon)}</div><b>${esc(c.title)}</b><span class="en">${esc(c.en)}</span></div>`).join('');
+
+  document.querySelector('#s5 .stats').innerHTML = CFG.numbers.stats.map((s, i) =>
+    (i ? '<div class="div"></div>' : '') +
+    `<div class="stat"><div class="num"><span class="count">0</span>${esc(s.suffix || '')}</div><div class="lab">${esc(s.ko)}<span class="en">${esc(s.en)}</span></div></div>`).join('');
+  const counters = [...document.querySelectorAll('#s5 .count')];
+
+  document.querySelector('#s7 .grid').innerHTML = CFG.summary.tiles.map(t => {
+    const cls = ['tile', t.style === 'dark' ? 'dark' : t.style === 'yellow' ? 'yel' : '', t.wide ? 'wide' : ''].join(' ');
+    const top = t.big ? `<div class="big">${esc(t.big)}</div>` : t.icon ? ms(t.icon, t.style === 'dark' ? 'grad' : '') : '<span></span>';
+    return `<div class="${cls}">${top}<div><b>${esc(t.title)}</b><small>${esc(t.en || '')}</small></div></div>`;
+  }).join('');
 
   /* ---------- logo (260910_심볼+워드_SVG.svg) ---------- */
   const SYMBOL_D = "M348.054 315.582C385.19 285.785 365.109 243.265 342.063 211.605C306.714 163.041 250.469 128.824 188.403 136.999C163.653 140.259 139.217 150.849 117.229 162.101L137.938 155.56C157.013 150.672 176.628 149.115 196.287 150.541L179.768 156.947C150.224 170.292 139.942 195.323 159.568 223.226C173.911 243.619 197.198 263.443 217.502 277.864C256.444 305.525 298.956 325.298 348.051 315.582C333.295 327.42 308.511 336.593 290.343 342.105C227.262 361.243 165.671 361.028 113.129 317.175C69.3198 280.611 41.5096 210.231 98.5363 171.106C121.251 155.521 151.969 141.291 177.041 129.289C214.628 111.292 266.27 86.2952 307.843 83.4341C368.546 79.2558 412.955 121.658 429.505 176.941C449.768 244.623 417.719 301.795 348.051 315.582H348.054Z";
@@ -270,30 +297,30 @@
   });
 
   /* ---------- channel orbit nodes ---------- */
-  const CH = [['local_pharmacy', '약국'], ['storefront', '백화점 · 편집숍'], ['flight', '면세 · 관광'], ['celebration', '팝업 · 체험'],
-              ['live_tv', '라이브커머스'], ['campaign', '인플루언서'], ['groups', '공동구매'], ['public', '해외 유통']];
+  const CH = CFG.channels.list;
   const nodesEl = document.getElementById('nodes');
-  const nodes = CH.map(([ic, label]) => {
+  const nodes = CH.map(c => {
     const n = document.createElement('div'); n.className = 'node';
-    n.innerHTML = `<div class="bubble"><span class="ms">${ic}</span></div><span>${label}</span>`;
+    n.innerHTML = `<div class="bubble">${ms(c.icon)}</div><span>${esc(c.name)}</span>`;
     nodesEl.appendChild(n); return n;
   });
 
   /* ---------- globe ---------- */
+  const Y = window.CONFIG_RGB.yellow;                      // "241,235,156"
   const gcv = document.getElementById('globe'), g = gcv.getContext('2d');
   const GLOBE = [];
   { const N = 2200, ga = Math.PI * (3 - Math.sqrt(5));
     for (let i = 0; i < N; i++) { const yy = 1 - 2 * (i + .5) / N, r = Math.sqrt(1 - yy * yy), a = i * ga; GLOBE.push([Math.cos(a) * r, yy, Math.sin(a) * r]); } }
   const ll2v = (la, lo) => [Math.cos(la * D2R) * Math.sin(lo * D2R), -Math.sin(la * D2R), Math.cos(la * D2R) * Math.cos(lo * D2R)];
-  const KR = ll2v(37.5, 127);
-  const DEST = [['Japan', 35.7, 139.7, 18, -12, 'left'], ['China', 31.2, 121.5, -18, -10, 'right'], ['Hong Kong', 22.3, 114.2, -18, 24, 'right'],
-                ['Taiwan', 25.0, 121.5, 18, 26, 'left'], ['USA', 40.7, -74.0, 18, -12, 'left'], ['Europe', 48.8, 2.3, 18, -12, 'left']]
-    .map(([n, la, lo, ox, oy, al]) => ({ n, v: ll2v(la, lo), ox, oy, al }));
+  const ORIGIN = CFG.global.origin, KR = ll2v(ORIGIN.lat, ORIGIN.lon);
+  const LABEL = { 'right': [18, -12, 'left'], 'left': [-18, -10, 'right'], 'below-left': [-18, 24, 'right'], 'below-right': [18, 26, 'left'] };
+  const DEST = CFG.global.destinations.map(d => { const [ox, oy, al] = LABEL[d.label] || LABEL.right; return { n: d.name, v: ll2v(d.lat, d.lon), ox, oy, al }; });
   const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
   const pr = (t, a, b) => clamp((t - a) / (b - a));
   const ioc = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
   function slerp(a, b, u) {
     const d = clamp(a[0] * b[0] + a[1] * b[1] + a[2] * b[2], -1, 1), w = Math.acos(d), s = Math.sin(w);
+    if (s < 1e-5) return a.slice();
     const k1 = Math.sin((1 - u) * w) / s, k2 = Math.sin(u * w) / s;
     return [a[0] * k1 + b[0] * k2, a[1] * k1 + b[1] * k2, a[2] * k1 + b[2] * k2];
   }
@@ -301,13 +328,13 @@
     g.clearRect(0, 0, W, H);
     if (grow <= 0) return;
     const gx = 1330, gy = 560, R = 400 * grow;
-    const c = (150 - lt * 12) * D2R, tilt = -.5, cc = Math.cos(c), sc = Math.sin(c), ct = Math.cos(tilt), st = Math.sin(tilt);
+    const c = (ORIGIN.lon + 23 - lt * 12) * D2R, tilt = -.5, cc = Math.cos(c), sc = Math.sin(c), ct = Math.cos(tilt), st = Math.sin(tilt);
     const proj = (v, lift = 1) => {
       const x1 = v[0] * cc - v[2] * sc, z1 = v[2] * cc + v[0] * sc, y = v[1] * ct - z1 * st, z = v[1] * st + z1 * ct;
       const k = 1800 / (1800 - z * R * lift); return [gx + x1 * R * lift * k, gy + y * R * lift * k, z];
     };
     const halo = g.createRadialGradient(gx, gy, R * .85, gx, gy, R * 1.4);
-    halo.addColorStop(0, 'rgba(241,235,156,.10)'); halo.addColorStop(1, 'rgba(241,235,156,0)');
+    halo.addColorStop(0, `rgba(${Y},.10)`); halo.addColorStop(1, `rgba(${Y},0)`);
     g.fillStyle = halo; g.beginPath(); g.arc(gx, gy, R * 1.4, 0, TAU); g.fill();
     for (const v of GLOBE) {
       const [x, y, z] = proj(v);
@@ -324,14 +351,14 @@
       for (let i = 0; i <= 56; i++) {
         const u = i / 56 * q, lift = 1 + (.03 + .12 * ang / Math.PI) * Math.sin(Math.PI * u);
         const pt = proj(slerp(KR, D.v, u), lift);
-        if (prev) { g.strokeStyle = pt[2] > -.05 ? '#F1EB9C' : 'rgba(241,235,156,.25)'; g.lineWidth = 2.5; g.beginPath(); g.moveTo(prev[0], prev[1]); g.lineTo(pt[0], pt[1]); g.stroke(); }
+        if (prev) { g.strokeStyle = pt[2] > -.05 ? `rgb(${Y})` : `rgba(${Y},.25)`; g.lineWidth = 2.5; g.beginPath(); g.moveTo(prev[0], prev[1]); g.lineTo(pt[0], pt[1]); g.stroke(); }
         prev = pt;
       }
       g.fillStyle = '#fff'; g.beginPath(); g.arc(prev[0], prev[1], 5, 0, TAU); g.fill();
       const arr = lt - (s + .8);
       if (arr > 0) {
         const [dx, dy, dz] = proj(D.v);
-        if (arr < .7) { g.strokeStyle = `rgba(241,235,156,${1 - arr / .7})`; g.lineWidth = 2; g.beginPath(); g.arc(dx, dy, 6 + arr * 60, 0, TAU); g.stroke(); }
+        if (arr < .7) { g.strokeStyle = `rgba(${Y},${1 - arr / .7})`; g.lineWidth = 2; g.beginPath(); g.arc(dx, dy, 6 + arr * 60, 0, TAU); g.stroke(); }
         if (dz > -.1) {
           g.font = '600 20px "Inter Tight"'; g.textAlign = D.al; g.fillStyle = `rgba(255,255,255,${Math.min(1, arr * 4) * .9})`;
           g.fillText(D.n, dx + D.ox, dy + D.oy);
@@ -339,19 +366,24 @@
       }
     });
     const pulse = .5 + .5 * Math.sin(lt * 7);
-    g.fillStyle = '#F1EB9C'; g.beginPath(); g.arc(kx, ky, 8, 0, TAU); g.fill();
-    g.strokeStyle = `rgba(241,235,156,${.7 - pulse * .5})`; g.lineWidth = 2; g.beginPath(); g.arc(kx, ky, 14 + pulse * 10, 0, TAU); g.stroke();
-    g.font = '700 20px "Inter Tight"'; g.textAlign = 'center'; g.fillStyle = `rgba(255,255,255,${pr(lt, .5, .9)})`;
-    g.textAlign = 'left'; g.fillText('Korea', kx + 16, ky - 16);
+    g.fillStyle = `rgb(${Y})`; g.beginPath(); g.arc(kx, ky, 8, 0, TAU); g.fill();
+    g.strokeStyle = `rgba(${Y},${.7 - pulse * .5})`; g.lineWidth = 2; g.beginPath(); g.arc(kx, ky, 14 + pulse * 10, 0, TAU); g.stroke();
+    g.font = '700 20px "Inter Tight"'; g.textAlign = 'left'; g.fillStyle = `rgba(255,255,255,${pr(lt, .5, .9)})`;
+    g.fillText(ORIGIN.name, kx + 16, ky - 16);
   }
 
+  /* ---------- scene clock: every cue is relative to a scene's start (A) or end (Z) ---------- */
+  const LEN = ['opening', 'message', 'purchase', 'channels', 'numbers', 'global', 'summary', 'ending'].map(k => +CFG.durations[k]);
+  const START = LEN.map((_, i) => LEN.slice(0, i).reduce((a, b) => a + b, 0));
+  const TOTAL = START[7] + LEN[7];
+  const A = (n, o = 0) => Math.max(0, START[n] + o);
+  const Z = (n, o = 0) => START[n] + LEN[n] + o;
+
   /* ---------- procedural state, driven by the master timeline ---------- */
-  const P = { orbit: 0, orbitAng: 0, n1: 0, n2: 0, globe: 0 };
-  const n1 = document.getElementById('n1'), n2 = document.getElementById('n2');
+  const P = { orbit: 0, orbitAng: 0, count: 0, globe: 0 };
   function frame() {
     const t = tl.time();
-    // channel orbit
-    if (t > 11 && t < 16) {
+    if (t > A(3, -.5) && t < Z(3, .5)) {
       nodes.forEach((n, i) => {
         const a = i / CH.length * TAU + P.orbitAng, r = P.orbit;
         const x = 960 + Math.cos(a) * 660 * r, y = 660 + Math.sin(a) * 200 * r;
@@ -363,121 +395,118 @@
         n.style.filter = `blur(${(1 - depth) * 2.5}px)`;
       });
     }
-    n1.textContent = Math.round(P.n1); n2.textContent = Math.round(P.n2);
-    if (t > 18 && t < 22.5) drawGlobe(t - 18.5, P.globe);
+    counters.forEach((el, i) => { el.textContent = Math.round(CFG.numbers.stats[i].value * P.count); });
+    if (t > A(5, -.5) && t < Z(5, .5)) drawGlobe(t - START[5], P.globe);
   }
 
   /* =========================================================================
-     MASTER TIMELINE (30s)
+     MASTER TIMELINE
      ========================================================================= */
   const tl = gsap.timeline({ paused: true, onUpdate: frame });
   const ex = 'expo.out', blurIn = { opacity: 0, y: 40, filter: 'blur(18px)' }, sharp = { opacity: 1, y: 0, filter: 'blur(0px)' };
-  const on = (sel, at) => tl.set(sel, { visibility: 'visible' }, at);
   gsap.set('.scene', { autoAlpha: 0 });
-  // GSAP's own transform-y so CSS translate on centred text isn't needed
   const words = sel => gsap.utils.toArray(sel + ' .w');
 
-  /* 1 · Opening 0 – 3.5 */
+  /* 1 · Opening */
   tl.set('#s1', { autoAlpha: 1 }, 0);
   tl.fromTo('#aurora', { opacity: 0 }, { opacity: 1, duration: 2.4, ease: 'power2.out' }, 0);
-  tl.fromTo('#aurora .a1', { x: -120, scale: .8 }, { x: 140, scale: 1.1, duration: 30, ease: 'none' }, 0);
-  tl.fromTo('#aurora .a2', { x: 100, y: 60 }, { x: -160, y: -40, duration: 30, ease: 'none' }, 0);
-  tl.fromTo('#aurora .a3', { x: 0, y: 0 }, { x: 220, y: -120, duration: 30, ease: 'none' }, 0);
+  tl.fromTo('#aurora .a1', { x: -120, scale: .8 }, { x: 140, scale: 1.1, duration: TOTAL, ease: 'none' }, 0);
+  tl.fromTo('#aurora .a2', { x: 100, y: 60 }, { x: -160, y: -40, duration: TOTAL, ease: 'none' }, 0);
+  tl.fromTo('#aurora .a3', { x: 0, y: 0 }, { x: 220, y: -120, duration: TOTAL, ease: 'none' }, 0);
   const lock1 = document.querySelector('#s1 .lockup'), wl = +lock1.dataset.wordLeft;
-  tl.fromTo('#s1 .sym', { scale: .55, rotation: -40, opacity: 0, filter: 'blur(30px)' }, { scale: 1, rotation: 0, opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: ex, transformOrigin: '50% 50%' }, .2);
-  tl.fromTo('#s1 .word', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'power3.inOut' }, 1.0);
-  tl.fromTo('#s1 .sweep', { left: wl, opacity: 0 }, { left: 1180, duration: 1.1, ease: 'power3.inOut' }, 1.0);
-  tl.to('#s1 .sweep', { opacity: 1, duration: .15 }, 1.0).to('#s1 .sweep', { opacity: 0, duration: .3 }, 1.95);
-  tl.fromTo('#s1 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, 1.7);
-  tl.fromTo('#s1 .ko', blurIn, { ...sharp, duration: 1.0, ease: ex }, 1.9);
-  tl.to('#s1', { scale: 1.08, filter: 'blur(16px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, 3.0);
+  tl.fromTo('#s1 .sym', { scale: .55, rotation: -40, opacity: 0, filter: 'blur(30px)' }, { scale: 1, rotation: 0, opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: ex, transformOrigin: '50% 50%' }, A(0, .2));
+  tl.fromTo('#s1 .word', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'power3.inOut' }, A(0, 1.0));
+  tl.fromTo('#s1 .sweep', { left: wl, opacity: 0 }, { left: 1180, duration: 1.1, ease: 'power3.inOut' }, A(0, 1.0));
+  tl.to('#s1 .sweep', { opacity: 1, duration: .15 }, A(0, 1.0)).to('#s1 .sweep', { opacity: 0, duration: .3 }, A(0, 1.95));
+  tl.fromTo('#s1 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(0, 1.7));
+  tl.fromTo('#s1 .ko', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(0, 1.9));
+  tl.to('#s1', { scale: 1.08, filter: 'blur(16px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, Z(0, -.5));
 
-  /* 2 · Statement 3.5 – 7.5 */
-  tl.set('#s2', { autoAlpha: 1 }, 3.4);
-  tl.to('#aurora', { opacity: .45, duration: 1 }, 3.4);
-  tl.fromTo(words('#s2 .l1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .12 }, 3.55);
-  tl.to('#s2 .l1', { color: '#48484a', duration: .8, ease: 'power2.out' }, 5.0);
-  tl.fromTo(words('#s2 .l2'), { opacity: 0, y: 40, filter: 'blur(18px)', scale: .96 }, { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, duration: 1.1, ease: ex, stagger: .16 }, 5.05);
-  tl.fromTo('#s2 .sub', blurIn, { ...sharp, duration: 1, ease: ex }, 5.8);
-  tl.to('#s2', { scale: .94, filter: 'blur(14px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, 7.0);
+  /* 2 · Statement */
+  tl.set('#s2', { autoAlpha: 1 }, A(1, -.1));
+  tl.to('#aurora', { opacity: .45, duration: 1 }, A(1, -.1));
+  tl.fromTo(words('#s2 .l1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .12 }, A(1, .05));
+  tl.to('#s2 .l1', { color: '#48484a', duration: .8, ease: 'power2.out' }, A(1, 1.5));
+  tl.fromTo(words('#s2 .l2'), { opacity: 0, y: 40, filter: 'blur(18px)', scale: .96 }, { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, duration: 1.1, ease: ex, stagger: .16 }, A(1, 1.55));
+  tl.fromTo('#s2 .sub', blurIn, { ...sharp, duration: 1, ease: ex }, A(1, 2.3));
+  tl.to('#s2', { scale: .94, filter: 'blur(14px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, Z(1, -.5));
 
-  /* 3 · Direct purchase 7.5 – 11.5 */
-  tl.fromTo('#s3', { autoAlpha: 1, clipPath: 'circle(0% at 50% 55%)' }, { clipPath: 'circle(75% at 50% 55%)', duration: 1.0, ease: 'expo.inOut' }, 7.05);
-  tl.fromTo('#s3 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 7.6);
-  tl.fromTo(words('#s3 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .09 }, 7.7);
-  tl.fromTo('#s3 .card', { opacity: 0, y: 160, rotationX: -38, filter: 'blur(12px)' }, { opacity: 1, y: 0, rotationX: 0, filter: 'blur(0px)', duration: 1.2, ease: ex, stagger: .13, transformOrigin: '50% 100%' }, 8.3);
-  tl.fromTo('#s3 .ic', { scale: .4 }, { scale: 1, duration: .9, ease: 'back.out(2.2)', stagger: .13 }, 8.6);
-  tl.fromTo('#s3 .ic .ms', { rotation: -90, opacity: 0 }, { rotation: 0, opacity: 1, duration: .9, ease: ex, stagger: .13 }, 8.7);
-  tl.to('#s3 .cards', { y: -14, duration: 2, ease: 'sine.inOut' }, 9.4);
-  tl.to('#s3 .card', { y: -60, opacity: 0, filter: 'blur(10px)', duration: .5, ease: 'power2.in', stagger: .06 }, 10.85);
-  tl.to(['#s3 .h1', '#s3 .eyebrow'], { y: -40, opacity: 0, duration: .5, ease: 'power2.in' }, 10.95);
-  tl.to('#s3', { autoAlpha: 0, duration: .4 }, 11.2);
+  /* 3 · Direct purchase */
+  tl.fromTo('#s3', { autoAlpha: 1, clipPath: 'circle(0% at 50% 55%)' }, { clipPath: 'circle(75% at 50% 55%)', duration: 1.0, ease: 'expo.inOut' }, A(2, -.45));
+  tl.fromTo('#s3 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(2, .1));
+  tl.fromTo(words('#s3 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .09 }, A(2, .2));
+  tl.fromTo('#s3 .card', { opacity: 0, y: 160, rotationX: -38, filter: 'blur(12px)' }, { opacity: 1, y: 0, rotationX: 0, filter: 'blur(0px)', duration: 1.2, ease: ex, stagger: .13, transformOrigin: '50% 100%' }, A(2, .8));
+  tl.fromTo('#s3 .ic', { scale: .4 }, { scale: 1, duration: .9, ease: 'back.out(2.2)', stagger: .13 }, A(2, 1.1));
+  tl.fromTo('#s3 .ic .ms', { rotation: -90, opacity: 0 }, { rotation: 0, opacity: 1, duration: .9, ease: ex, stagger: .13 }, A(2, 1.2));
+  tl.to('#s3 .cards', { y: -14, duration: Math.max(.5, LEN[2] - 2.6), ease: 'sine.inOut' }, A(2, 1.9));
+  tl.to('#s3 .card', { y: -60, opacity: 0, filter: 'blur(10px)', duration: .5, ease: 'power2.in', stagger: .06 }, Z(2, -.65));
+  tl.to(['#s3 .h1', '#s3 .eyebrow'], { y: -40, opacity: 0, duration: .5, ease: 'power2.in' }, Z(2, -.55));
+  tl.to('#s3', { autoAlpha: 0, duration: .4 }, Z(2, -.3));
 
-  /* 4 · Channel orbit 11.5 – 15.5 */
-  tl.set('#s4', { autoAlpha: 1 }, 11.3);
-  tl.to('#aurora', { opacity: .7, duration: 1 }, 11.2);
-  tl.fromTo('#s4 .ring', { strokeDasharray: 4200, strokeDashoffset: 4200 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: .15 }, 11.4);
-  tl.fromTo('#s4 .glow', { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: 1.4, ease: ex }, 11.5);
-  tl.fromTo('#s4 .core', { opacity: 0, scale: .4, rotation: -60, filter: 'blur(20px)' }, { opacity: 1, scale: 1, rotation: 0, filter: 'blur(0px)', duration: 1.3, ease: ex }, 11.55);
-  tl.fromTo(P, { orbit: 0 }, { orbit: 1, duration: 1.5, ease: ex }, 11.8);
-  tl.fromTo(P, { orbitAng: -.6 }, { orbitAng: 1.6, duration: 4.2, ease: 'power1.inOut' }, 11.3);
-  tl.fromTo('#s4 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 11.6);
-  tl.fromTo(words('#s4 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .2 }, 11.75);
-  tl.to(P, { orbit: 0, duration: .5, ease: 'expo.in' }, 14.95);
-  tl.to(['#s4 .h1', '#s4 .eyebrow', '#s4 .rings'], { opacity: 0, duration: .4 }, 15.0);
-  tl.to('#s4 .core', { scale: 3, opacity: 0, duration: .5, ease: 'expo.in' }, 15.05);
+  /* 4 · Channel orbit */
+  tl.set('#s4', { autoAlpha: 1 }, A(3, -.2));
+  tl.to('#aurora', { opacity: .7, duration: 1 }, A(3, -.3));
+  tl.fromTo('#s4 .ring', { strokeDasharray: 4200, strokeDashoffset: 4200 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: .15 }, A(3, -.1));
+  tl.fromTo('#s4 .glow', { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: 1.4, ease: ex }, A(3, 0));
+  tl.fromTo('#s4 .core', { opacity: 0, scale: .4, rotation: -60, filter: 'blur(20px)' }, { opacity: 1, scale: 1, rotation: 0, filter: 'blur(0px)', duration: 1.3, ease: ex }, A(3, .05));
+  tl.fromTo(P, { orbit: 0 }, { orbit: 1, duration: 1.5, ease: ex }, A(3, .3));
+  tl.fromTo(P, { orbitAng: -.6 }, { orbitAng: 1.6, duration: LEN[3] + .2, ease: 'power1.inOut' }, A(3, -.2));
+  tl.fromTo('#s4 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(3, .1));
+  tl.fromTo(words('#s4 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .12 }, A(3, .25));
+  tl.to(P, { orbit: 0, duration: .5, ease: 'expo.in' }, Z(3, -.55));
+  tl.to(['#s4 .h1', '#s4 .eyebrow', '#s4 .rings'], { opacity: 0, duration: .4 }, Z(3, -.5));
+  tl.to('#s4 .core', { scale: 3, opacity: 0, duration: .5, ease: 'expo.in' }, Z(3, -.45));
 
-  /* 5 · Numbers 15.5 – 18.5 */
-  tl.fromTo('#s5', { autoAlpha: 1, clipPath: 'circle(0% at 50% 61%)' }, { clipPath: 'circle(80% at 50% 61%)', duration: .9, ease: 'expo.inOut' }, 15.25);
-  tl.set('#s4', { autoAlpha: 0 }, 16.2);
-  tl.fromTo('#s5', { backgroundPosition: '0% 0%' }, { backgroundPosition: '100% 100%', duration: 3.4, ease: 'none' }, 15.25);
-  tl.fromTo('#s5 .eyebrow', blurIn, { ...sharp, duration: .8, ease: ex }, 15.6);
-  tl.fromTo('#s5 .stat', { opacity: 0, y: 90, filter: 'blur(16px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: .12 }, 15.6);
-  tl.fromTo('#s5 .div', { scaleY: 0 }, { scaleY: 1, duration: .9, ease: ex }, 15.9);
-  tl.fromTo(P, { n1: 0, n2: 0 }, { n1: 200, n2: 800, duration: 1.6, ease: 'power3.out' }, 15.65);
-  tl.to('#s5 .stat', { y: -70, opacity: 0, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: .06 }, 18.0);
-  tl.to('#s5', { autoAlpha: 0, duration: .45 }, 18.2);
+  /* 5 · Numbers */
+  tl.fromTo('#s5', { autoAlpha: 1, clipPath: 'circle(0% at 50% 61%)' }, { clipPath: 'circle(80% at 50% 61%)', duration: .9, ease: 'expo.inOut' }, A(4, -.25));
+  tl.set('#s4', { autoAlpha: 0 }, A(4, .7));
+  tl.fromTo('#s5', { backgroundPosition: '0% 0%' }, { backgroundPosition: '100% 100%', duration: LEN[4] + .4, ease: 'none' }, A(4, -.25));
+  tl.fromTo('#s5 .eyebrow', blurIn, { ...sharp, duration: .8, ease: ex }, A(4, .1));
+  tl.fromTo('#s5 .stat', { opacity: 0, y: 90, filter: 'blur(16px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: .12 }, A(4, .1));
+  tl.fromTo('#s5 .div', { scaleY: 0 }, { scaleY: 1, duration: .9, ease: ex }, A(4, .4));
+  tl.fromTo(P, { count: 0 }, { count: 1, duration: 1.6, ease: 'power3.out' }, A(4, .15));
+  tl.to('#s5 .stat', { y: -70, opacity: 0, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: .06 }, Z(4, -.5));
+  tl.to('#s5', { autoAlpha: 0, duration: .45 }, Z(4, -.3));
 
-  /* 6 · Global 18.5 – 22 */
-  tl.set('#s6', { autoAlpha: 1 }, 18.3);
-  tl.to('#aurora', { opacity: .4, duration: 1 }, 18.3);
-  tl.fromTo(P, { globe: 0 }, { globe: 1, duration: 1.4, ease: ex }, 18.4);
-  tl.fromTo('#s6 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 18.6);
-  tl.fromTo(words('#s6 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .18 }, 18.7);
-  tl.fromTo('#s6 .sub', blurIn, { ...sharp, duration: 1.0, ease: ex }, 19.3);
-  tl.to(P, { globe: 2.6, duration: .7, ease: 'expo.in' }, 21.3);
-  tl.to(['#s6 .h1', '#s6 .eyebrow', '#s6 .sub'], { opacity: 0, x: -40, duration: .45, ease: 'power2.in' }, 21.3);
-  tl.to('#s6', { autoAlpha: 0, duration: .35 }, 21.75);
+  /* 6 · Global */
+  tl.set('#s6', { autoAlpha: 1 }, A(5, -.2));
+  tl.to('#aurora', { opacity: .4, duration: 1 }, A(5, -.2));
+  tl.fromTo(P, { globe: 0 }, { globe: 1, duration: 1.4, ease: ex }, A(5, -.1));
+  tl.fromTo('#s6 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(5, .1));
+  tl.fromTo(words('#s6 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .18 }, A(5, .2));
+  tl.fromTo('#s6 .sub', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(5, .8));
+  tl.to(P, { globe: 2.6, duration: .7, ease: 'expo.in' }, Z(5, -.7));
+  tl.to(['#s6 .h1', '#s6 .eyebrow', '#s6 .sub'], { opacity: 0, x: -40, duration: .45, ease: 'power2.in' }, Z(5, -.7));
+  tl.to('#s6', { autoAlpha: 0, duration: .35 }, Z(5, -.25));
 
-  /* 7 · Bento 22 – 26 */
-  tl.set('#s7', { autoAlpha: 1 }, 21.7);
-  tl.fromTo('#s7 .bg', { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' }, 21.7);
-  tl.fromTo('#s7 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 22.0);
-  tl.fromTo(words('#s7 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .15 }, 22.1);
-  tl.fromTo('#s7 .tile', { opacity: 0, scale: .82, y: 60, filter: 'blur(14px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: { each: .08, from: 'center' } }, 22.45);
-  tl.fromTo('#s7 .tile .ms', { scale: .3, rotation: -45 }, { scale: 1, rotation: 0, duration: 1, ease: 'back.out(2)', stagger: .1 }, 22.8);
-  tl.fromTo('#s7 .grid', { scale: 1 }, { scale: 1.035, duration: 2.8, ease: 'sine.inOut' }, 22.6);
-  tl.to('#s7 .tile', { opacity: 0, scale: .9, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: { each: .04, from: 'edges' } }, 25.3);
-  tl.to(['#s7 .h1', '#s7 .eyebrow'], { opacity: 0, y: -30, duration: .45, ease: 'power2.in' }, 25.35);
-  tl.to('#s7 .bg', { opacity: 0, duration: .5 }, 25.6);
-  tl.set('#s7', { autoAlpha: 0 }, 26.1);
+  /* 7 · Bento */
+  tl.set('#s7', { autoAlpha: 1 }, A(6, -.3));
+  tl.fromTo('#s7 .bg', { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' }, A(6, -.3));
+  tl.fromTo('#s7 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(6, 0));
+  tl.fromTo(words('#s7 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .1 }, A(6, .1));
+  tl.fromTo('#s7 .tile', { opacity: 0, scale: .82, y: 60, filter: 'blur(14px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: { each: .08, from: 'center' } }, A(6, .45));
+  tl.fromTo('#s7 .tile .ms', { scale: .3, rotation: -45 }, { scale: 1, rotation: 0, duration: 1, ease: 'back.out(2)', stagger: .1 }, A(6, .8));
+  tl.fromTo('#s7 .grid', { scale: 1 }, { scale: 1.035, duration: Math.max(.5, LEN[6] - 1.2), ease: 'sine.inOut' }, A(6, .6));
+  tl.to('#s7 .tile', { opacity: 0, scale: .9, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: { each: .04, from: 'edges' } }, Z(6, -.7));
+  tl.to(['#s7 .h1', '#s7 .eyebrow'], { opacity: 0, y: -30, duration: .45, ease: 'power2.in' }, Z(6, -.65));
+  tl.to('#s7 .bg', { opacity: 0, duration: .5 }, Z(6, -.4));
+  tl.set('#s7', { autoAlpha: 0 }, Z(6, .1));
 
-  /* 8 · End 26 – 30 */
-  tl.set('#s8', { autoAlpha: 1 }, 25.9);
-  tl.to('#aurora', { opacity: 1, duration: 1.4 }, 25.8);
-  tl.fromTo('#s8 .lockup', { opacity: 0, scale: 1.12, filter: 'blur(26px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.6, ease: ex }, 26.1);
-  tl.fromTo('#s8 .tag', blurIn, { ...sharp, duration: 1.0, ease: ex }, 26.9);
-  tl.fromTo('#s8 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, 27.2);
-  tl.to(['#s8', '#aurora'], { opacity: 0, duration: .8, ease: 'power2.in' }, 29.2);
-  tl.set({}, {}, 30);
+  /* 8 · End */
+  tl.set('#s8', { autoAlpha: 1 }, A(7, -.1));
+  tl.to('#aurora', { opacity: 1, duration: 1.4 }, A(7, -.2));
+  tl.fromTo('#s8 .lockup', { opacity: 0, scale: 1.12, filter: 'blur(26px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.6, ease: ex }, A(7, .1));
+  tl.fromTo('#s8 .tag', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(7, .9));
+  tl.fromTo('#s8 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(7, 1.2));
+  tl.to(['#s8', '#aurora'], { opacity: 0, duration: .8, ease: 'power2.in' }, Z(7, -.8));
+  tl.set({}, {}, TOTAL);
 
   /* ---------- playback ---------- */
   const D = tl.duration();
   window.__timeline = tl; window.DURATION = D;
   window.renderAt = t => { tl.seek(((t % D) + D) % D); frame(); };
   const bar = document.getElementById('bar'), tc = document.getElementById('tc'), st = document.getElementById('st'), ui = document.getElementById('ui');
-  const ticker = () => { bar.style.width = (tl.time() / D * 100) + '%'; tc.textContent = tl.time().toFixed(2) + 's'; };
-  gsap.ticker.add(ticker);
+  gsap.ticker.add(() => { bar.style.width = (tl.time() / D * 100) + '%'; tc.textContent = tl.time().toFixed(2) + 's / ' + D.toFixed(1) + 's'; });
   tl.eventCallback('onComplete', () => tl.restart());
   const toggle = () => { tl.paused() ? tl.play() : tl.pause(); st.textContent = tl.paused() ? '▶' : '❚❚'; };
   addEventListener('keydown', e => {
@@ -492,7 +521,7 @@
 
   const fonts = ['800 100px Pretendard', '700 100px Pretendard', '600 100px Pretendard', '500 100px Pretendard',
                  '700 100px "Inter Tight"', '600 100px "Inter Tight"', '500 100px "Inter Tight"', '48px "Material Symbols Rounded"'];
-  Promise.race([Promise.all(fonts.map(f => document.fonts.load(f, f.includes('Material') ? 'hub' : '가A'))), new Promise(r => setTimeout(r, 5000))]).then(() => {
+  Promise.race([Promise.all(fonts.map(f => document.fonts.load(f, f.includes('Material') ? CH[0].icon : '가A'))), new Promise(r => setTimeout(r, 5000))]).then(() => {
     if (q.has('t')) { renderAt(parseFloat(q.get('t'))); st.textContent = '▶'; }
     else tl.play(0);
   });
