@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BEAUTYORA Keynote Film</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=campaign,celebration,flight,groups,handshake,hub,inventory_2,live_tv,local_pharmacy,payments,public,storefront,verified&display=block">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  :root {
+    --black: #000;
+    --ink: #1d1d1f;
+    --gray: #86868b;
+    --gray-dark: #424245;
+    --light: #f5f5f7;
+    --white: #fff;
+    --y1: #FBF8E1;
+    --y2: #F1EB9C;          /* PANTONE 600 C */
+    --y3: #E2D46C;
+    --ygrad: linear-gradient(120deg, var(--y1) 0%, var(--y2) 45%, var(--y3) 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+  body { font-family: Pretendard, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  #stage {
+    position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; overflow: hidden;
+    transform-origin: 0 0; background: var(--black); color: var(--white); word-break: keep-all;
+  }
+  .scene { position: absolute; inset: 0; visibility: hidden; opacity: 0; }
+
+  /* type */
+  .en { font-family: "Inter Tight", Pretendard, sans-serif; }
+  .eyebrow { font-family: "Inter Tight", sans-serif; font-weight: 600; font-size: 30px; letter-spacing: -0.01em; }
+  .h1 { font-weight: 800; letter-spacing: -0.045em; line-height: 1.12; }
+  .w { display: inline-block; will-change: transform, filter, opacity; }
+  .grad { background: var(--ygrad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .center { position: absolute; left: 0; right: 0; text-align: center; }
+
+  /* icons — Google Material Symbols */
+  .ms {
+    font-family: "Material Symbols Rounded"; font-weight: normal; font-style: normal; line-height: 1;
+    letter-spacing: normal; text-transform: none; white-space: nowrap; direction: ltr;
+    -webkit-font-feature-settings: "liga"; font-feature-settings: "liga";
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
+  }
+
+  /* logo: symbol + wordmark always share one colour */
+  .lockup { position: relative; display: inline-flex; align-items: center; color: var(--white); }
+  .lockup svg path { fill: currentColor; }
+  .sweep {
+    position: absolute; top: 50%; width: 3px; height: 150%; transform: translate(-50%, -50%);
+    background: var(--y2); border-radius: 3px; opacity: 0;
+    box-shadow: 0 0 24px 6px rgba(241,235,156,.55), 0 0 80px 20px rgba(241,235,156,.25);
+  }
+
+  /* aurora */
+  #aurora { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+  #aurora i { position: absolute; border-radius: 50%; filter: blur(140px); }
+  #aurora .a1 { width: 900px; height: 700px; left: 360px; top: 380px; background: rgba(241,235,156,.42); }
+  #aurora .a2 { width: 700px; height: 600px; left: 980px; top: 200px; background: rgba(226,212,108,.30); }
+  #aurora .a3 { width: 600px; height: 500px; left: 700px; top: 620px; background: rgba(251,248,225,.20); }
+
+  /* S1 */
+  #s1 .lock-wrap { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; }
+  #s1 .eyebrow { top: 640px; color: var(--gray); font-weight: 500; font-size: 32px; letter-spacing: .01em; }
+  #s1 .ko { top: 700px; color: var(--gray-dark); font-size: 26px; font-weight: 500; letter-spacing: .02em; }
+
+  /* S2 */
+  #s2 .l1 { top: 330px; font-size: 112px; }
+  #s2 .l2 { top: 500px; font-size: 112px; }
+  #s2 .sub { top: 700px; font-size: 34px; font-weight: 500; color: var(--gray); }
+
+  /* S3 */
+  #s3 { background: var(--light); color: var(--ink); }
+  #s3 .eyebrow { top: 150px; color: var(--gray); }
+  #s3 .h1 { top: 205px; font-size: 92px; }
+  #s3 .cards { position: absolute; left: 0; right: 0; top: 560px; display: flex; justify-content: center; gap: 32px; perspective: 1400px; }
+  #s3 .card {
+    width: 500px; height: 340px; border-radius: 40px; background: var(--white); padding: 48px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.03), 0 30px 80px rgba(0,0,0,.06); display: flex; flex-direction: column;
+  }
+  #s3 .ic { width: 104px; height: 104px; border-radius: 50%; background: var(--ygrad); display: grid; place-items: center; }
+  #s3 .ic .ms { font-size: 56px; color: var(--ink); font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48; }
+  #s3 .card b { margin-top: auto; font-size: 44px; font-weight: 700; letter-spacing: -0.03em; }
+  #s3 .card span.en { margin-top: 8px; font-size: 24px; color: var(--gray); font-weight: 500; }
+
+  /* S4 */
+  #s4 .eyebrow { top: 120px; }
+  #s4 .h1 { top: 170px; font-size: 80px; }
+  #s4 svg.rings { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  #s4 .core { position: absolute; left: 960px; top: 660px; transform: translate(-50%, -50%); }
+  #s4 .glow { position: absolute; left: 960px; top: 660px; width: 520px; height: 420px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(241,235,156,.35); filter: blur(90px); }
+  #s4 .node { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; will-change: transform, opacity; }
+  #s4 .bubble {
+    width: 128px; height: 128px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  }
+  #s4 .bubble .ms { font-size: 58px; color: var(--white); }
+  #s4 .node span { font-size: 24px; font-weight: 600; color: rgba(255,255,255,.88); white-space: nowrap; letter-spacing: -0.01em; }
+
+  /* S5 */
+  #s5 { background: var(--ygrad); color: var(--ink); background-size: 200% 200%; }
+  #s5 .eyebrow { top: 210px; color: rgba(29,29,31,.6); }
+  #s5 .stats { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; align-items: flex-start; gap: 0; }
+  #s5 .stat { width: 800px; text-align: center; }
+  #s5 .num { font-family: "Inter Tight", sans-serif; font-weight: 700; font-size: 250px; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+  #s5 .lab { margin-top: 28px; font-size: 48px; font-weight: 700; letter-spacing: -0.03em; }
+  #s5 .lab .en { font-size: 30px; font-weight: 500; color: rgba(29,29,31,.55); margin-left: 12px; letter-spacing: -0.01em; }
+  #s5 .div { width: 2px; height: 340px; margin-top: 20px; background: rgba(29,29,31,.25); transform-origin: 50% 0; }
+
+  /* S6 */
+  #s6 canvas { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+  #s6 .eyebrow { left: 160px; top: 330px; position: absolute; }
+  #s6 .h1 { position: absolute; left: 160px; top: 380px; font-size: 120px; line-height: 1.1; }
+  #s6 .sub { position: absolute; left: 160px; top: 690px; font-size: 30px; font-weight: 500; color: var(--gray); }
+
+  /* S7 */
+  #s7 { color: var(--ink); }
+  #s7 .bg { position: absolute; inset: 0; background: var(--light); }
+  #s7 .eyebrow { top: 110px; color: var(--gray); }
+  #s7 .h1 { top: 158px; font-size: 68px; }
+  #s7 .grid {
+    position: absolute; left: 160px; top: 290px; width: 1600px; height: 700px;
+    display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; gap: 24px;
+  }
+  #s7 .tile {
+    border-radius: 36px; background: var(--white); padding: 44px; display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0,0,0,.03), 0 24px 60px rgba(0,0,0,.05); overflow: hidden; position: relative;
+  }
+  #s7 .tile.dark { background: var(--black); color: var(--white); }
+  #s7 .tile.yel { background: var(--ygrad); }
+  #s7 .tile.wide { grid-column: span 2; }
+  #s7 .tile .ms { font-size: 64px; }
+  #s7 .tile b { font-size: 46px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.2; }
+  #s7 .tile small { display: block; font-family: "Inter Tight", sans-serif; font-size: 22px; font-weight: 500; opacity: .55; margin-top: 8px; }
+  #s7 .tile .big { font-family: "Inter Tight", sans-serif; font-size: 112px; font-weight: 700; letter-spacing: -0.06em; line-height: .9; }
+
+  /* S8 */
+  #s8 .lock-wrap { position: absolute; left: 0; right: 0; top: 400px; display: flex; justify-content: center; }
+  #s8 .tag { top: 620px; font-size: 46px; font-weight: 700; letter-spacing: -0.03em; }
+  #s8 .eyebrow { top: 700px; color: var(--gray); font-weight: 500; letter-spacing: .02em; }
+
+  #ui {
+    position: fixed; left: 0; right: 0; bottom: 0; padding: 14px 20px; display: flex; align-items: center; gap: 16px;
+    font: 500 12px Pretendard, sans-serif; color: rgba(255,255,255,.8);
+    background: linear-gradient(transparent, rgba(0,0,0,.65)); transition: opacity .4s; z-index: 10;
+  }
+  #ui .track { flex: 1; height: 4px; background: rgba(255,255,255,.2); border-radius: 2px; cursor: pointer; position: relative; }
+  #ui .track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--y2); border-radius: 2px; }
+  #ui.hide { opacity: 0; }
+  body.record #ui { display: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+
+  <!-- 1 · Opening -->
+  <section class="scene" id="s1">
+    <div class="lock-wrap"><div class="lockup" data-w="1180"><i class="sweep"></i></div></div>
+    <p class="center eyebrow">Beauty Distribution Network</p>
+    <p class="center ko">화장품 · 건강기능식품 · 웰니스</p>
+  </section>
+
+  <!-- 2 · Statement -->
+  <section class="scene" id="s2">
+    <p class="center h1 l1"><span class="w">광고비는</span> <span class="w">멈추면</span> <span class="w">사라집니다.</span></p>
+    <p class="center h1 l2"><span class="w">채널은</span> <span class="w grad">남습니다.</span></p>
+    <p class="center sub en">Ads fade. Channels stay.</p>
+  </section>
+
+  <!-- 3 · Direct purchase -->
+  <section class="scene" id="s3">
+    <p class="center eyebrow">Direct Purchase</p>
+    <p class="center h1"><span class="w">뷰티오라는</span> <span class="w">상품을</span><br><span class="w">직접</span> <span class="w">매입합니다.</span></p>
+    <div class="cards">
+      <div class="card"><div class="ic"><span class="ms">payments</span></div><b>즉시 매출</b><span class="en">Instant revenue</span></div>
+      <div class="card"><div class="ic"><span class="ms">inventory_2</span></div><b>재고 리스크 분담</b><span class="en">Shared inventory risk</span></div>
+      <div class="card"><div class="ic"><span class="ms">hub</span></div><b>채널 분산 판매</b><span class="en">Multi-channel sales</span></div>
+    </div>
+  </section>
+
+  <!-- 4 · Channel orbit -->
+  <section class="scene" id="s4">
+    <svg class="rings" viewBox="0 0 1920 1080" fill="none">
+      <ellipse class="ring" cx="960" cy="660" rx="660" ry="200" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/>
+      <ellipse class="ring" cx="960" cy="660" rx="430" ry="128" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+    </svg>
+    <div class="glow"></div>
+    <div class="core"><div class="lockup sym-only" data-w="200" data-sym-only></div></div>
+    <div id="nodes"></div>
+    <p class="center eyebrow grad" style="display:block;width:max-content;margin:0 auto">Channel Network</p>
+    <p class="center h1"><span class="w">오프라인은 판매,</span> <span class="w grad">온라인은 확산.</span></p>
+  </section>
+
+  <!-- 5 · Numbers -->
+  <section class="scene" id="s5">
+    <p class="center eyebrow">Our Network</p>
+    <div class="stats">
+      <div class="stat"><div class="num"><span id="n1">0</span>+</div><div class="lab">브랜드<span class="en">Brands</span></div></div>
+      <div class="div"></div>
+      <div class="stat"><div class="num"><span id="n2">0</span>+</div><div class="lab">상품<span class="en">Products</span></div></div>
+    </div>
+  </section>
+
+  <!-- 6 · Global -->
+  <section class="scene" id="s6">
+    <canvas id="globe" width="1920" height="1080"></canvas>
+    <p class="eyebrow grad">Global</p>
+    <p class="h1"><span class="w">국내에서</span><br><span class="w grad">해외까지.</span></p>
+    <p class="sub">일본 · 중국 · 홍콩 · 대만 · 미국 · 유럽</p>
+  </section>
+
+  <!-- 7 · Bento recap -->
+  <section class="scene" id="s7">
+    <div class="bg"></div>
+    <p class="center eyebrow">All in One</p>
+    <p class="center h1"><span class="w">브랜드와 채널 사이,</span> <span class="w">뷰티오라.</span></p>
+    <div class="grid">
+      <div class="tile dark wide"><span class="ms grad">handshake</span><div><b>상품을 직접 매입합니다</b><small>Direct purchase</small></div></div>
+      <div class="tile yel"><div class="big">200+</div><div><b>브랜드</b><small>Brands</small></div></div>
+      <div class="tile"><div class="big">800+</div><div><b>상품</b><small>Products</small></div></div>
+      <div class="tile"><span class="ms">storefront</span><div><b>오프라인 판매</b><small>Offline sales</small></div></div>
+      <div class="tile"><span class="ms">campaign</span><div><b>온라인 확산</b><small>Online reach</small></div></div>
+      <div class="tile wide"><span class="ms">public</span><div><b>국내에서 해외까지</b><small>Korea · Japan · China · Hong Kong · Taiwan · USA · Europe</small></div></div>
+    </div>
+  </section>
+
+  <!-- 8 · End -->
+  <section class="scene" id="s8">
+    <div class="lock-wrap"><div class="lockup" data-w="1100"></div></div>
+    <p class="center tag">브랜드와 채널 사이를 설계합니다.</p>
+    <p class="center eyebrow">Beauty Distribution Network</p>
+  </section>
+</div>
+
+<div id="ui"><span id="st">❚❚</span><div class="track" id="track"><i id="bar"></i></div><span id="tc">0.00s</span><span>Space 재생/정지 · R 처음부터 · ←/→ 1초 이동</span></div>
+
+<script>
+(() => {
+  const W = 1920, H = 1080, TAU = Math.PI * 2, D2R = Math.PI / 180;
+  const q = new URLSearchParams(location.search);
+  if (q.has('record')) document.body.classList.add('record');
+
+  /* ---------- fit stage ---------- */
+  const stage = document.getElementById('stage');
+  const fitStage = () => { const s = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `scale(${s}) translate(-50%, -50%)`; };
+  addEventListener('resize', fitStage); fitStage();
+
+  /* ---------- logo (260910_심볼+워드_SVG.svg) ---------- */
+  const SYMBOL_D = "M348.054 315.582C385.19 285.785 365.109 243.265 342.063 211.605C306.714 163.041 250.469 128.824 188.403 136.999C163.653 140.259 139.217 150.849 117.229 162.101L137.938 155.56C157.013 150.672 176.628 149.115 196.287 150.541L179.768 156.947C150.224 170.292 139.942 195.323 159.568 223.226C173.911 243.619 197.198 263.443 217.502 277.864C256.444 305.525 298.956 325.298 348.051 315.582C333.295 327.42 308.511 336.593 290.343 342.105C227.262 361.243 165.671 361.028 113.129 317.175C69.3198 280.611 41.5096 210.231 98.5363 171.106C121.251 155.521 151.969 141.291 177.041 129.289C214.628 111.292 266.27 86.2952 307.843 83.4341C368.546 79.2558 412.955 121.658 429.505 176.941C449.768 244.623 417.719 301.795 348.051 315.582H348.054Z";
+  const WORD_D = "M713.095 304.27H541.801V144.894H712.394C746.746 144.894 761.936 158.214 761.936 184.388C761.936 203.316 752.822 215.702 734.828 220.609C756.795 225.283 767.778 238.603 767.778 261.739C767.778 291.417 750.485 304.27 713.095 304.27ZM702.579 173.404H578.724V211.262H704.449C717.535 211.262 727.116 205.653 727.116 192.333C727.116 179.246 719.872 173.404 702.579 173.404ZM707.486 237.902H578.724V277.863H705.851C725.013 277.863 732.959 272.956 732.959 258C732.959 242.81 723.377 237.902 707.486 237.902ZM980.503 304.27H771.117V144.894H980.503V174.573H808.508V211.028H975.829V235.565H808.508V274.592H980.503V304.27ZM1189.82 304.27L1167.62 270.385H1037.46L1015.26 304.27H970.388L1077.89 144.894H1127.66L1235.16 304.27H1189.82ZM1054.98 243.978H1150.1L1102.66 171.535L1054.98 243.978ZM1397.96 220.609V144.894H1435.35V228.087C1435.35 282.771 1391.88 306.841 1322.48 306.841C1253.31 306.841 1209.84 282.771 1209.84 228.087V144.894H1247.23V220.609C1247.23 258.934 1270.6 274.825 1322.48 274.825C1374.59 274.825 1397.96 258.934 1397.96 220.609ZM1528.89 176.91H1433.32V144.894H1661.4V176.91H1566.28V304.27H1528.89V176.91ZM1755.16 243.044L1647.43 144.894H1695.57L1774.32 214.767L1852.84 144.894H1900.28L1792.55 243.277V304.27H1755.16V243.044ZM2000.92 307.308C1912.35 307.308 1872.86 281.836 1872.86 224.582C1872.86 167.328 1912.35 141.856 2000.92 141.856C2089.49 141.856 2128.98 167.328 2128.98 224.582C2128.98 281.836 2089.49 307.308 2000.92 307.308ZM2000.92 275.059C2069.39 275.059 2091.13 260.336 2091.13 224.582C2091.13 188.828 2069.39 174.105 2000.92 174.105C1932.45 174.105 1910.25 188.828 1910.25 224.582C1910.25 260.336 1932.45 275.059 2000.92 275.059ZM2170.03 304.27H2132.64V144.894H2288.74C2328 144.894 2352.54 159.149 2352.54 198.643C2352.54 232.995 2332.91 249.587 2296.69 251.69L2282.43 251.924L2295.99 260.804L2350.2 304.27H2302.76L2241.3 253.793H2170.03V304.27ZM2170.03 176.91V225.517H2285.47C2305.8 225.517 2313.98 218.74 2313.98 201.447C2313.98 183.453 2305.8 176.91 2285.47 176.91H2170.03ZM2555.45 304.27L2533.25 270.385H2403.09L2380.89 304.27H2336.02L2443.51 144.894H2493.29L2600.79 304.27H2555.45ZM2420.61 243.978H2515.72L2468.29 171.535L2420.61 243.978Z";
+  document.querySelectorAll('.lockup').forEach(el => {
+    const w = +el.dataset.w;
+    if (el.hasAttribute('data-sym-only')) {
+      el.insertAdjacentHTML('beforeend', `<svg class="sym" viewBox="40 78 412 290" style="width:${w}px;height:${w * 290 / 412}px"><path d="${SYMBOL_D}"/></svg>`);
+      return;
+    }
+    const s = w / 2565;
+    el.insertAdjacentHTML('beforeend',
+      `<svg class="sym" viewBox="40 78 412 290" style="width:${412 * s}px;height:${290 * s}px"><path d="${SYMBOL_D}"/></svg>` +
+      `<svg class="word" viewBox="530 135 2075 180" style="width:${2075 * s}px;height:${180 * s}px;margin-left:${78 * s}px"><path d="${WORD_D}"/></svg>`);
+    el.dataset.wordLeft = (412 + 78) * s;
+  });
+
+  /* ---------- channel orbit nodes ---------- */
+  const CH = [['local_pharmacy', '약국'], ['storefront', '백화점 · 편집숍'], ['flight', '면세 · 관광'], ['celebration', '팝업 · 체험'],
+              ['live_tv', '라이브커머스'], ['campaign', '인플루언서'], ['groups', '공동구매'], ['public', '해외 유통']];
+  const nodesEl = document.getElementById('nodes');
+  const nodes = CH.map(([ic, label]) => {
+    const n = document.createElement('div'); n.className = 'node';
+    n.innerHTML = `<div class="bubble"><span class="ms">${ic}</span></div><span>${label}</span>`;
+    nodesEl.appendChild(n); return n;
+  });
+
+  /* ---------- globe ---------- */
+  const gcv = document.getElementById('globe'), g = gcv.getContext('2d');
+  const GLOBE = [];
+  { const N = 2200, ga = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < N; i++) { const yy = 1 - 2 * (i + .5) / N, r = Math.sqrt(1 - yy * yy), a = i * ga; GLOBE.push([Math.cos(a) * r, yy, Math.sin(a) * r]); } }
+  const ll2v = (la, lo) => [Math.cos(la * D2R) * Math.sin(lo * D2R), -Math.sin(la * D2R), Math.cos(la * D2R) * Math.cos(lo * D2R)];
+  const KR = ll2v(37.5, 127);
+  const DEST = [['Japan', 35.7, 139.7, 18, -12, 'left'], ['China', 31.2, 121.5, -18, -10, 'right'], ['Hong Kong', 22.3, 114.2, -18, 24, 'right'],
+                ['Taiwan', 25.0, 121.5, 18, 26, 'left'], ['USA', 40.7, -74.0, 18, -12, 'left'], ['Europe', 48.8, 2.3, 18, -12, 'left']]
+    .map(([n, la, lo, ox, oy, al]) => ({ n, v: ll2v(la, lo), ox, oy, al }));
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const pr = (t, a, b) => clamp((t - a) / (b - a));
+  const ioc = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  function slerp(a, b, u) {
+    const d = clamp(a[0] * b[0] + a[1] * b[1] + a[2] * b[2], -1, 1), w = Math.acos(d), s = Math.sin(w);
+    const k1 = Math.sin((1 - u) * w) / s, k2 = Math.sin(u * w) / s;
+    return [a[0] * k1 + b[0] * k2, a[1] * k1 + b[1] * k2, a[2] * k1 + b[2] * k2];
+  }
+  function drawGlobe(lt, grow) {
+    g.clearRect(0, 0, W, H);
+    if (grow <= 0) return;
+    const gx = 1330, gy = 560, R = 400 * grow;
+    const c = (150 - lt * 12) * D2R, tilt = -.5, cc = Math.cos(c), sc = Math.sin(c), ct = Math.cos(tilt), st = Math.sin(tilt);
+    const proj = (v, lift = 1) => {
+      const x1 = v[0] * cc - v[2] * sc, z1 = v[2] * cc + v[0] * sc, y = v[1] * ct - z1 * st, z = v[1] * st + z1 * ct;
+      const k = 1800 / (1800 - z * R * lift); return [gx + x1 * R * lift * k, gy + y * R * lift * k, z];
+    };
+    const halo = g.createRadialGradient(gx, gy, R * .85, gx, gy, R * 1.4);
+    halo.addColorStop(0, 'rgba(241,235,156,.10)'); halo.addColorStop(1, 'rgba(241,235,156,0)');
+    g.fillStyle = halo; g.beginPath(); g.arc(gx, gy, R * 1.4, 0, TAU); g.fill();
+    for (const v of GLOBE) {
+      const [x, y, z] = proj(v);
+      if (z < 0) { g.fillStyle = 'rgba(255,255,255,.07)'; g.fillRect(x - .8, y - .8, 1.6, 1.6); }
+      else { const s = 1.6 + z * 1.6; g.fillStyle = `rgba(255,255,255,${.22 + .6 * z})`; g.beginPath(); g.arc(x, y, s / 2 + .3, 0, TAU); g.fill(); }
+    }
+    const [kx, ky] = proj(KR);
+    g.lineCap = 'round';
+    DEST.forEach((D, k) => {
+      const s = .8 + k * .2, q = ioc(pr(lt, s, s + .8));
+      if (q <= 0) return;
+      const ang = Math.acos(clamp(KR[0] * D.v[0] + KR[1] * D.v[1] + KR[2] * D.v[2], -1, 1));
+      let prev = null;
+      for (let i = 0; i <= 56; i++) {
+        const u = i / 56 * q, lift = 1 + (.03 + .12 * ang / Math.PI) * Math.sin(Math.PI * u);
+        const pt = proj(slerp(KR, D.v, u), lift);
+        if (prev) { g.strokeStyle = pt[2] > -.05 ? '#F1EB9C' : 'rgba(241,235,156,.25)'; g.lineWidth = 2.5; g.beginPath(); g.moveTo(prev[0], prev[1]); g.lineTo(pt[0], pt[1]); g.stroke(); }
+        prev = pt;
+      }
+      g.fillStyle = '#fff'; g.beginPath(); g.arc(prev[0], prev[1], 5, 0, TAU); g.fill();
+      const arr = lt - (s + .8);
+      if (arr > 0) {
+        const [dx, dy, dz] = proj(D.v);
+        if (arr < .7) { g.strokeStyle = `rgba(241,235,156,${1 - arr / .7})`; g.lineWidth = 2; g.beginPath(); g.arc(dx, dy, 6 + arr * 60, 0, TAU); g.stroke(); }
+        if (dz > -.1) {
+          g.font = '600 20px "Inter Tight"'; g.textAlign = D.al; g.fillStyle = `rgba(255,255,255,${Math.min(1, arr * 4) * .9})`;
+          g.fillText(D.n, dx + D.ox, dy + D.oy);
+        }
+      }
+    });
+    const pulse = .5 + .5 * Math.sin(lt * 7);
+    g.fillStyle = '#F1EB9C'; g.beginPath(); g.arc(kx, ky, 8, 0, TAU); g.fill();
+    g.strokeStyle = `rgba(241,235,156,${.7 - pulse * .5})`; g.lineWidth = 2; g.beginPath(); g.arc(kx, ky, 14 + pulse * 10, 0, TAU); g.stroke();
+    g.font = '700 20px "Inter Tight"'; g.textAlign = 'center'; g.fillStyle = `rgba(255,255,255,${pr(lt, .5, .9)})`;
+    g.textAlign = 'left'; g.fillText('Korea', kx + 16, ky - 16);
+  }
+
+  /* ---------- procedural state, driven by the master timeline ---------- */
+  const P = { orbit: 0, orbitAng: 0, n1: 0, n2: 0, globe: 0 };
+  const n1 = document.getElementById('n1'), n2 = document.getElementById('n2');
+  function frame() {
+    const t = tl.time();
+    // channel orbit
+    if (t > 11 && t < 16) {
+      nodes.forEach((n, i) => {
+        const a = i / CH.length * TAU + P.orbitAng, r = P.orbit;
+        const x = 960 + Math.cos(a) * 660 * r, y = 660 + Math.sin(a) * 200 * r;
+        const depth = (Math.sin(a) + 1) / 2;
+        const s = (.68 + .42 * depth) * (.4 + .6 * r);
+        n.style.transform = `translate(${x}px, ${y}px) translate(-50%, -64px) scale(${s})`;
+        n.style.opacity = (.3 + .7 * depth) * Math.min(1, r * 1.4);
+        n.style.zIndex = depth > .5 ? 5 : 1;
+        n.style.filter = `blur(${(1 - depth) * 2.5}px)`;
+      });
+    }
+    n1.textContent = Math.round(P.n1); n2.textContent = Math.round(P.n2);
+    if (t > 18 && t < 22.5) drawGlobe(t - 18.5, P.globe);
+  }
+
+  /* =========================================================================
+     MASTER TIMELINE (30s)
+     ========================================================================= */
+  const tl = gsap.timeline({ paused: true, onUpdate: frame });
+  const ex = 'expo.out', blurIn = { opacity: 0, y: 40, filter: 'blur(18px)' }, sharp = { opacity: 1, y: 0, filter: 'blur(0px)' };
+  const on = (sel, at) => tl.set(sel, { visibility: 'visible' }, at);
+  gsap.set('.scene', { autoAlpha: 0 });
+  // GSAP's own transform-y so CSS translate on centred text isn't needed
+  const words = sel => gsap.utils.toArray(sel + ' .w');
+
+  /* 1 · Opening 0 – 3.5 */
+  tl.set('#s1', { autoAlpha: 1 }, 0);
+  tl.fromTo('#aurora', { opacity: 0 }, { opacity: 1, duration: 2.4, ease: 'power2.out' }, 0);
+  tl.fromTo('#aurora .a1', { x: -120, scale: .8 }, { x: 140, scale: 1.1, duration: 30, ease: 'none' }, 0);
+  tl.fromTo('#aurora .a2', { x: 100, y: 60 }, { x: -160, y: -40, duration: 30, ease: 'none' }, 0);
+  tl.fromTo('#aurora .a3', { x: 0, y: 0 }, { x: 220, y: -120, duration: 30, ease: 'none' }, 0);
+  const lock1 = document.querySelector('#s1 .lockup'), wl = +lock1.dataset.wordLeft;
+  tl.fromTo('#s1 .sym', { scale: .55, rotation: -40, opacity: 0, filter: 'blur(30px)' }, { scale: 1, rotation: 0, opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: ex, transformOrigin: '50% 50%' }, .2);
+  tl.fromTo('#s1 .word', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'power3.inOut' }, 1.0);
+  tl.fromTo('#s1 .sweep', { left: wl, opacity: 0 }, { left: 1180, duration: 1.1, ease: 'power3.inOut' }, 1.0);
+  tl.to('#s1 .sweep', { opacity: 1, duration: .15 }, 1.0).to('#s1 .sweep', { opacity: 0, duration: .3 }, 1.95);
+  tl.fromTo('#s1 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, 1.7);
+  tl.fromTo('#s1 .ko', blurIn, { ...sharp, duration: 1.0, ease: ex }, 1.9);
+  tl.to('#s1', { scale: 1.08, filter: 'blur(16px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, 3.0);
+
+  /* 2 · Statement 3.5 – 7.5 */
+  tl.set('#s2', { autoAlpha: 1 }, 3.4);
+  tl.to('#aurora', { opacity: .45, duration: 1 }, 3.4);
+  tl.fromTo(words('#s2 .l1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .12 }, 3.55);
+  tl.to('#s2 .l1', { color: '#48484a', duration: .8, ease: 'power2.out' }, 5.0);
+  tl.fromTo(words('#s2 .l2'), { opacity: 0, y: 40, filter: 'blur(18px)', scale: .96 }, { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, duration: 1.1, ease: ex, stagger: .16 }, 5.05);
+  tl.fromTo('#s2 .sub', blurIn, { ...sharp, duration: 1, ease: ex }, 5.8);
+  tl.to('#s2', { scale: .94, filter: 'blur(14px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, 7.0);
+
+  /* 3 · Direct purchase 7.5 – 11.5 */
+  tl.fromTo('#s3', { autoAlpha: 1, clipPath: 'circle(0% at 50% 55%)' }, { clipPath: 'circle(75% at 50% 55%)', duration: 1.0, ease: 'expo.inOut' }, 7.05);
+  tl.fromTo('#s3 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 7.6);
+  tl.fromTo(words('#s3 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .09 }, 7.7);
+  tl.fromTo('#s3 .card', { opacity: 0, y: 160, rotationX: -38, filter: 'blur(12px)' }, { opacity: 1, y: 0, rotationX: 0, filter: 'blur(0px)', duration: 1.2, ease: ex, stagger: .13, transformOrigin: '50% 100%' }, 8.3);
+  tl.fromTo('#s3 .ic', { scale: .4 }, { scale: 1, duration: .9, ease: 'back.out(2.2)', stagger: .13 }, 8.6);
+  tl.fromTo('#s3 .ic .ms', { rotation: -90, opacity: 0 }, { rotation: 0, opacity: 1, duration: .9, ease: ex, stagger: .13 }, 8.7);
+  tl.to('#s3 .cards', { y: -14, duration: 2, ease: 'sine.inOut' }, 9.4);
+  tl.to('#s3 .card', { y: -60, opacity: 0, filter: 'blur(10px)', duration: .5, ease: 'power2.in', stagger: .06 }, 10.85);
+  tl.to(['#s3 .h1', '#s3 .eyebrow'], { y: -40, opacity: 0, duration: .5, ease: 'power2.in' }, 10.95);
+  tl.to('#s3', { autoAlpha: 0, duration: .4 }, 11.2);
+
+  /* 4 · Channel orbit 11.5 – 15.5 */
+  tl.set('#s4', { autoAlpha: 1 }, 11.3);
+  tl.to('#aurora', { opacity: .7, duration: 1 }, 11.2);
+  tl.fromTo('#s4 .ring', { strokeDasharray: 4200, strokeDashoffset: 4200 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: .15 }, 11.4);
+  tl.fromTo('#s4 .glow', { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: 1.4, ease: ex }, 11.5);
+  tl.fromTo('#s4 .core', { opacity: 0, scale: .4, rotation: -60, filter: 'blur(20px)' }, { opacity: 1, scale: 1, rotation: 0, filter: 'blur(0px)', duration: 1.3, ease: ex }, 11.55);
+  tl.fromTo(P, { orbit: 0 }, { orbit: 1, duration: 1.5, ease: ex }, 11.8);
+  tl.fromTo(P, { orbitAng: -.6 }, { orbitAng: 1.6, duration: 4.2, ease: 'power1.inOut' }, 11.3);
+  tl.fromTo('#s4 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 11.6);
+  tl.fromTo(words('#s4 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .2 }, 11.75);
+  tl.to(P, { orbit: 0, duration: .5, ease: 'expo.in' }, 14.95);
+  tl.to(['#s4 .h1', '#s4 .eyebrow', '#s4 .rings'], { opacity: 0, duration: .4 }, 15.0);
+  tl.to('#s4 .core', { scale: 3, opacity: 0, duration: .5, ease: 'expo.in' }, 15.05);
+
+  /* 5 · Numbers 15.5 – 18.5 */
+  tl.fromTo('#s5', { autoAlpha: 1, clipPath: 'circle(0% at 50% 61%)' }, { clipPath: 'circle(80% at 50% 61%)', duration: .9, ease: 'expo.inOut' }, 15.25);
+  tl.set('#s4', { autoAlpha: 0 }, 16.2);
+  tl.fromTo('#s5', { backgroundPosition: '0% 0%' }, { backgroundPosition: '100% 100%', duration: 3.4, ease: 'none' }, 15.25);
+  tl.fromTo('#s5 .eyebrow', blurIn, { ...sharp, duration: .8, ease: ex }, 15.6);
+  tl.fromTo('#s5 .stat', { opacity: 0, y: 90, filter: 'blur(16px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: .12 }, 15.6);
+  tl.fromTo('#s5 .div', { scaleY: 0 }, { scaleY: 1, duration: .9, ease: ex }, 15.9);
+  tl.fromTo(P, { n1: 0, n2: 0 }, { n1: 200, n2: 800, duration: 1.6, ease: 'power3.out' }, 15.65);
+  tl.to('#s5 .stat', { y: -70, opacity: 0, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: .06 }, 18.0);
+  tl.to('#s5', { autoAlpha: 0, duration: .45 }, 18.2);
+
+  /* 6 · Global 18.5 – 22 */
+  tl.set('#s6', { autoAlpha: 1 }, 18.3);
+  tl.to('#aurora', { opacity: .4, duration: 1 }, 18.3);
+  tl.fromTo(P, { globe: 0 }, { globe: 1, duration: 1.4, ease: ex }, 18.4);
+  tl.fromTo('#s6 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 18.6);
+  tl.fromTo(words('#s6 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .18 }, 18.7);
+  tl.fromTo('#s6 .sub', blurIn, { ...sharp, duration: 1.0, ease: ex }, 19.3);
+  tl.to(P, { globe: 2.6, duration: .7, ease: 'expo.in' }, 21.3);
+  tl.to(['#s6 .h1', '#s6 .eyebrow', '#s6 .sub'], { opacity: 0, x: -40, duration: .45, ease: 'power2.in' }, 21.3);
+  tl.to('#s6', { autoAlpha: 0, duration: .35 }, 21.75);
+
+  /* 7 · Bento 22 – 26 */
+  tl.set('#s7', { autoAlpha: 1 }, 21.7);
+  tl.fromTo('#s7 .bg', { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' }, 21.7);
+  tl.fromTo('#s7 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, 22.0);
+  tl.fromTo(words('#s7 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .15 }, 22.1);
+  tl.fromTo('#s7 .tile', { opacity: 0, scale: .82, y: 60, filter: 'blur(14px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: { each: .08, from: 'center' } }, 22.45);
+  tl.fromTo('#s7 .tile .ms', { scale: .3, rotation: -45 }, { scale: 1, rotation: 0, duration: 1, ease: 'back.out(2)', stagger: .1 }, 22.8);
+  tl.fromTo('#s7 .grid', { scale: 1 }, { scale: 1.035, duration: 2.8, ease: 'sine.inOut' }, 22.6);
+  tl.to('#s7 .tile', { opacity: 0, scale: .9, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: { each: .04, from: 'edges' } }, 25.3);
+  tl.to(['#s7 .h1', '#s7 .eyebrow'], { opacity: 0, y: -30, duration: .45, ease: 'power2.in' }, 25.35);
+  tl.to('#s7 .bg', { opacity: 0, duration: .5 }, 25.6);
+  tl.set('#s7', { autoAlpha: 0 }, 26.1);
+
+  /* 8 · End 26 – 30 */
+  tl.set('#s8', { autoAlpha: 1 }, 25.9);
+  tl.to('#aurora', { opacity: 1, duration: 1.4 }, 25.8);
+  tl.fromTo('#s8 .lockup', { opacity: 0, scale: 1.12, filter: 'blur(26px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.6, ease: ex }, 26.1);
+  tl.fromTo('#s8 .tag', blurIn, { ...sharp, duration: 1.0, ease: ex }, 26.9);
+  tl.fromTo('#s8 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, 27.2);
+  tl.to(['#s8', '#aurora'], { opacity: 0, duration: .8, ease: 'power2.in' }, 29.2);
+  tl.set({}, {}, 30);
+
+  /* ---------- playback ---------- */
+  const D = tl.duration();
+  window.__timeline = tl; window.DURATION = D;
+  window.renderAt = t => { tl.seek(((t % D) + D) % D); frame(); };
+  const bar = document.getElementById('bar'), tc = document.getElementById('tc'), st = document.getElementById('st'), ui = document.getElementById('ui');
+  const ticker = () => { bar.style.width = (tl.time() / D * 100) + '%'; tc.textContent = tl.time().toFixed(2) + 's'; };
+  gsap.ticker.add(ticker);
+  tl.eventCallback('onComplete', () => tl.restart());
+  const toggle = () => { tl.paused() ? tl.play() : tl.pause(); st.textContent = tl.paused() ? '▶' : '❚❚'; };
+  addEventListener('keydown', e => {
+    if (e.code === 'Space') { e.preventDefault(); toggle(); }
+    if (e.key === 'r' || e.key === 'R') tl.restart();
+    if (e.key === 'ArrowRight') tl.seek(Math.min(D - .01, tl.time() + 1));
+    if (e.key === 'ArrowLeft') tl.seek(Math.max(0, tl.time() - 1));
+  });
+  document.getElementById('track').addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); tl.seek((e.clientX - r.left) / r.width * D); });
+  let idle; const wake = () => { ui.classList.remove('hide'); clearTimeout(idle); idle = setTimeout(() => ui.classList.add('hide'), 2000); };
+  addEventListener('mousemove', wake); wake();
+
+  const fonts = ['800 100px Pretendard', '700 100px Pretendard', '600 100px Pretendard', '500 100px Pretendard',
+                 '700 100px "Inter Tight"', '600 100px "Inter Tight"', '500 100px "Inter Tight"', '48px "Material Symbols Rounded"'];
+  Promise.race([Promise.all(fonts.map(f => document.fonts.load(f, f.includes('Material') ? 'hub' : '가A'))), new Promise(r => setTimeout(r, 5000))]).then(() => {
+    if (q.has('t')) { renderAt(parseFloat(q.get('t'))); st.textContent = '▶'; }
+    else tl.play(0);
+  });
+})();
+</script>
+</body>
+</html>
