@@ -23,6 +23,7 @@ window.CONFIG = {
     black:       '#000000',   // 어두운 배경
     ink:         '#1D1D1F',   // 밝은 배경 위의 글자색
     gray:        '#86868B',   // 보조 문구
+    grayLight:   '#D1D1D6',   // 어두운 배경 위 보조 문구 (오프닝·엔딩 하단)
     light:       '#F5F5F7',   // 밝은 배경
     white:       '#FFFFFF',
   },

@@ -16,7 +16,7 @@
     const rgb = h => { const x = h.replace("#", ""); return [0, 2, 4].map(i => parseInt(x.slice(i, i + 2), 16)).join(","); };
     window.CONFIG_RGB = { yellow: rgb(col.yellow), yellowLight: rgb(col.yellowLight), yellowDeep: rgb(col.yellowDeep), ink: rgb(col.ink) };
     const root = document.documentElement.style;
-    [["--black", col.black], ["--ink", col.ink], ["--gray", col.gray], ["--light", col.light], ["--white", col.white],
+    [["--black", col.black], ["--ink", col.ink], ["--gray", col.gray], ["--gray-light", col.grayLight || "#D1D1D6"], ["--light", col.light], ["--white", col.white],
      ["--y1", col.yellowLight], ["--y2", col.yellow], ["--y3", col.yellowDeep],
      ["--y1-rgb", CONFIG_RGB.yellowLight], ["--y2-rgb", CONFIG_RGB.yellow], ["--y3-rgb", CONFIG_RGB.yellowDeep], ["--ink-rgb", CONFIG_RGB.ink]]
       .forEach(([k, v]) => root.setProperty(k, v));
@@ -33,6 +33,7 @@
     --ink: #1d1d1f;
     --gray: #86868b;
     --gray-dark: #424245;
+    --gray-light: #D1D1D6;
     --light: #f5f5f7;
     --white: #fff;
     --y1: #FBF8E1;
@@ -84,8 +85,8 @@
 
   /* S1 */
   #s1 .lock-wrap { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; }
-  #s1 .eyebrow { top: 640px; color: var(--gray); font-weight: 500; font-size: 32px; letter-spacing: .01em; }
-  #s1 .ko { top: 700px; color: var(--gray-dark); font-size: 26px; font-weight: 500; letter-spacing: .02em; }
+  #s1 .eyebrow { top: 640px; color: var(--gray-light); font-weight: 500; font-size: 32px; letter-spacing: .01em; }
+  #s1 .ko { top: 700px; color: var(--gray-light); opacity: .85; font-size: 26px; font-weight: 500; letter-spacing: .02em; }
 
   /* S2 */
   #s2 .l1 { top: 330px; font-size: 112px; }
@@ -161,7 +162,7 @@
   /* S8 */
   #s8 .lock-wrap { position: absolute; left: 0; right: 0; top: 400px; display: flex; justify-content: center; }
   #s8 .tag { top: 620px; font-size: 46px; font-weight: 700; letter-spacing: -0.03em; }
-  #s8 .eyebrow { top: 700px; color: var(--gray); font-weight: 500; letter-spacing: .02em; }
+  #s8 .eyebrow { top: 700px; color: var(--gray-light); font-weight: 500; letter-spacing: .02em; }
 
   #ui {
     position: fixed; left: 0; right: 0; bottom: 0; padding: 14px 20px; display: flex; align-items: center; gap: 16px;
