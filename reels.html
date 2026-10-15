@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BEAUTYORA Keynote Reels</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=block">
+<script src="config.js"></script>
+<script>
+  /* config.js 의 색상·아이콘을 페이지에 적용 */
+  (() => {
+    const C = window.CONFIG, col = C.colors;
+    const rgb = h => { const x = h.replace("#", ""); return [0, 2, 4].map(i => parseInt(x.slice(i, i + 2), 16)).join(","); };
+    window.CONFIG_RGB = { yellow: rgb(col.yellow), yellowLight: rgb(col.yellowLight), yellowDeep: rgb(col.yellowDeep), ink: rgb(col.ink) };
+    const root = document.documentElement.style;
+    [["--black", col.black], ["--ink", col.ink], ["--gray", col.gray], ["--gray-light", col.grayLight || "#D1D1D6"], ["--light", col.light], ["--white", col.white],
+     ["--y1", col.yellowLight], ["--y2", col.yellow], ["--y3", col.yellowDeep],
+     ["--y1-rgb", CONFIG_RGB.yellowLight], ["--y2-rgb", CONFIG_RGB.yellow], ["--y3-rgb", CONFIG_RGB.yellowDeep], ["--ink-rgb", CONFIG_RGB.ink]]
+      .forEach(([k, v]) => root.setProperty(k, v));
+    const icons = new Set([...C.purchase.cards, ...C.channels.list, ...C.summary.tiles].map(x => x.icon).filter(Boolean));
+    const link = document.createElement("link"); link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=" + [...icons].sort().join(",") + "&display=block";
+    document.head.appendChild(link);
+  })();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  :root {
+    --black: #000;
+    --ink: #1d1d1f;
+    --gray: #86868b;
+    --gray-dark: #424245;
+    --gray-light: #D1D1D6;
+    --light: #f5f5f7;
+    --white: #fff;
+    --y1: #FBF8E1;
+    --y2: #F1EB9C;          /* PANTONE 600 C */
+    --y3: #E2D46C;
+    --ygrad: linear-gradient(120deg, var(--y1) 0%, var(--y2) 45%, var(--y3) 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+  body { font-family: Pretendard, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  #stage {
+    position: absolute; left: 50%; top: 50%; width: 1080px; height: 1920px; overflow: hidden;
+    transform-origin: 0 0; background: var(--black); color: var(--white); word-break: keep-all;
+  }
+  .scene { position: absolute; inset: 0; visibility: hidden; opacity: 0; }
+
+  /* type */
+  .en { font-family: "Inter Tight", Pretendard, sans-serif; }
+  .eyebrow { font-family: "Inter Tight", sans-serif; font-weight: 600; font-size: 30px; letter-spacing: -0.01em; }
+  .h1 { font-weight: 800; letter-spacing: -0.045em; line-height: 1.12; }
+  .w { display: inline-block; will-change: transform, filter, opacity; }
+  .grad { background: var(--ygrad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .center { position: absolute; left: 0; right: 0; text-align: center; }
+
+  /* icons — Google Material Symbols */
+  .ms {
+    font-family: "Material Symbols Rounded"; font-weight: normal; font-style: normal; line-height: 1;
+    letter-spacing: normal; text-transform: none; white-space: nowrap; direction: ltr;
+    -webkit-font-feature-settings: "liga"; font-feature-settings: "liga";
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
+  }
+
+  /* logo: symbol + wordmark always share one colour */
+  .lockup { position: relative; display: inline-flex; align-items: center; color: var(--white); }
+  .lockup svg path { fill: currentColor; }
+  .sweep {
+    position: absolute; top: 50%; width: 3px; height: 150%; transform: translate(-50%, -50%);
+    background: var(--y2); border-radius: 3px; opacity: 0;
+    box-shadow: 0 0 24px 6px rgba(var(--y2-rgb),.55), 0 0 80px 20px rgba(var(--y2-rgb),.25);
+  }
+
+  /* ===== REELS 1080×1920 · 핵심 내용은 가운데 4:5 영역(y 285–1635) 안에 배치 ===== */
+  .center { padding: 0 80px; }
+
+  /* aurora */
+  #aurora { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+  #aurora i { position: absolute; border-radius: 50%; filter: blur(140px); }
+  #aurora .a1 { width: 900px; height: 820px; left: 90px; top: 760px; background: rgba(var(--y2-rgb),.42); }
+  #aurora .a2 { width: 700px; height: 700px; left: 320px; top: 420px; background: rgba(var(--y3-rgb),.30); }
+  #aurora .a3 { width: 700px; height: 600px; left: 160px; top: 1160px; background: rgba(var(--y1-rgb),.20); }
+
+  /* S1 */
+  #s1 .lock-wrap { position: absolute; left: 0; right: 0; top: 850px; display: flex; justify-content: center; }
+  #s1 .eyebrow { top: 1010px; color: var(--gray-light); font-weight: 500; font-size: 36px; letter-spacing: .01em; }
+  #s1 .ko { top: 1072px; color: var(--gray-light); opacity: .85; font-size: 30px; font-weight: 500; letter-spacing: .02em; }
+
+  /* S2 */
+  #s2 .l1 { top: 600px; font-size: 100px; }
+  #s2 .l2 { top: 880px; font-size: 100px; }
+  #s2 .sub { top: 1080px; font-size: 36px; font-weight: 500; color: var(--gray); }
+
+  /* S3 */
+  #s3 { background: var(--light); color: var(--ink); }
+  #s3 .eyebrow { top: 400px; color: var(--gray); }
+  #s3 .h1 { top: 450px; font-size: 84px; }
+  #s3 .cards { position: absolute; left: 0; right: 0; top: 750px; display: flex; flex-direction: column; align-items: center; gap: 24px; perspective: 1400px; }
+  #s3 .card {
+    width: 880px; height: 210px; border-radius: 40px; background: var(--white); padding: 0 52px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.03), 0 30px 80px rgba(0,0,0,.06);
+    display: grid; grid-template-columns: 112px 1fr; grid-template-rows: 1fr 1fr; column-gap: 40px; align-items: center;
+  }
+  #s3 .ic { grid-row: span 2; width: 112px; height: 112px; border-radius: 50%; background: var(--ygrad); display: grid; place-items: center; }
+  #s3 .ic .ms { font-size: 58px; color: var(--ink); font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48; }
+  #s3 .card b { align-self: end; font-size: 46px; font-weight: 700; letter-spacing: -0.03em; }
+  #s3 .card span.en { align-self: start; margin-top: 8px; font-size: 26px; color: var(--gray); font-weight: 500; }
+
+  /* S4 */
+  #s4 .eyebrow { top: 370px; padding: 0; }
+  #s4 .h1 { top: 420px; font-size: 80px; }
+  #s4 svg.rings { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  #s4 .core { position: absolute; left: 540px; top: 1060px; transform: translate(-50%, -50%); }
+  #s4 .glow { position: absolute; left: 540px; top: 1060px; width: 520px; height: 420px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(var(--y2-rgb),.35); filter: blur(90px); }
+  #s4 .node { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; will-change: transform, opacity; }
+  #s4 .bubble {
+    width: 116px; height: 116px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  }
+  #s4 .bubble .ms { font-size: 54px; color: var(--white); }
+  #s4 .node span { font-size: 26px; font-weight: 600; color: rgba(255,255,255,.88); white-space: nowrap; letter-spacing: -0.01em; }
+
+  /* S5 */
+  #s5 { background: var(--ygrad); color: var(--ink); background-size: 200% 200%; }
+  #s5 .eyebrow { top: 400px; color: rgba(var(--ink-rgb),.6); }
+  #s5 .stats { position: absolute; left: 0; right: 0; top: 480px; display: flex; flex-direction: column; align-items: center; }
+  #s5 .stat { width: 100%; text-align: center; }
+  #s5 .num { font-family: "Inter Tight", sans-serif; font-weight: 700; font-size: 260px; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+  #s5 .lab { margin-top: 20px; font-size: 52px; font-weight: 700; letter-spacing: -0.03em; }
+  #s5 .lab .en { font-size: 32px; font-weight: 500; color: rgba(var(--ink-rgb),.55); margin-left: 12px; letter-spacing: -0.01em; }
+  #s5 .div { width: 280px; height: 2px; margin: 56px 0; background: rgba(var(--ink-rgb),.25); transform-origin: 50% 50%; }
+
+  /* S6 */
+  #s6 canvas { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  #s6 .eyebrow { position: absolute; left: 0; right: 0; top: 360px; text-align: center; width: max-content; margin: 0 auto; }
+  #s6 .h1 { position: absolute; left: 0; right: 0; top: 410px; text-align: center; font-size: 112px; line-height: 1.1; }
+  #s6 .sub { position: absolute; left: 0; right: 0; top: 690px; text-align: center; font-size: 32px; font-weight: 500; color: var(--gray); }
+
+  /* S7 */
+  #s7 { color: var(--ink); }
+  #s7 .bg { position: absolute; inset: 0; background: var(--light); }
+  #s7 .eyebrow { top: 340px; color: var(--gray); }
+  #s7 .h1 { top: 390px; font-size: 64px; }
+  #s7 .grid {
+    position: absolute; left: 70px; top: 590px; width: 940px; height: 1000px;
+    display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); gap: 20px;
+  }
+  #s7 .tile {
+    border-radius: 32px; background: var(--white); padding: 32px 36px; display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0,0,0,.03), 0 24px 60px rgba(0,0,0,.05); overflow: hidden; position: relative;
+  }
+  #s7 .tile.dark { background: var(--black); color: var(--white); }
+  #s7 .tile.yel { background: var(--ygrad); }
+  #s7 .tile.wide { grid-column: span 2; }
+  #s7 .tile .ms { font-size: 56px; }
+  #s7 .tile b { font-size: 40px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.2; }
+  #s7 .tile small { display: block; font-family: "Inter Tight", sans-serif; font-size: 20px; font-weight: 500; opacity: .55; margin-top: 6px; }
+  #s7 .tile .big { font-family: "Inter Tight", sans-serif; font-size: 96px; font-weight: 700; letter-spacing: -0.06em; line-height: .9; }
+
+  /* S8 */
+  #s8 .lock-wrap { position: absolute; left: 0; right: 0; top: 860px; display: flex; justify-content: center; }
+  #s8 .tag { top: 1030px; font-size: 48px; font-weight: 700; letter-spacing: -0.03em; }
+  #s8 .eyebrow { top: 1110px; color: var(--gray-light); font-weight: 500; font-size: 32px; letter-spacing: .02em; }
+
+  #ui {
+    position: fixed; left: 0; right: 0; bottom: 0; padding: 14px 20px; display: flex; align-items: center; gap: 16px;
+    font: 500 12px Pretendard, sans-serif; color: rgba(255,255,255,.8);
+    background: linear-gradient(transparent, rgba(0,0,0,.65)); transition: opacity .4s; z-index: 10;
+  }
+  #ui .track { flex: 1; height: 4px; background: rgba(255,255,255,.2); border-radius: 2px; cursor: pointer; position: relative; }
+  #ui .track i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--y2); border-radius: 2px; }
+  #ui.hide { opacity: 0; }
+  body.record #ui { display: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+
+  <!-- 1 · Opening -->
+  <section class="scene" id="s1">
+    <div class="lock-wrap"><div class="lockup" data-w="900"><i class="sweep"></i></div></div>
+    <p class="center eyebrow" data-text="opening.tagline"></p>
+    <p class="center ko" data-text="opening.sub"></p>
+  </section>
+
+  <!-- 2 · Statement -->
+  <section class="scene" id="s2">
+    <p class="center h1 l1" data-rich="message.line1"></p>
+    <p class="center h1 l2" data-rich="message.line2"></p>
+    <p class="center sub en" data-text="message.sub"></p>
+  </section>
+
+  <!-- 3 · Direct purchase -->
+  <section class="scene" id="s3">
+    <p class="center eyebrow" data-text="purchase.eyebrow"></p>
+    <p class="center h1" data-rich="purchase.title"></p>
+    <div class="cards"></div>
+  </section>
+
+  <!-- 4 · Channel orbit -->
+  <section class="scene" id="s4">
+    <svg class="rings" viewBox="0 0 1080 1920" fill="none">
+      <ellipse class="ring" cx="540" cy="1060" rx="420" ry="150" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/>
+      <ellipse class="ring" cx="540" cy="1060" rx="275" ry="98" stroke="rgba(255,255,255,.10)" stroke-width="1.5"/>
+    </svg>
+    <div class="glow"></div>
+    <div class="core"><div class="lockup sym-only" data-w="200" data-sym-only></div></div>
+    <div id="nodes"></div>
+    <p class="center eyebrow grad" style="display:block;width:max-content;margin:0 auto" data-text="channels.eyebrow"></p>
+    <p class="center h1" data-rich="channels.title"></p>
+  </section>
+
+  <!-- 5 · Numbers -->
+  <section class="scene" id="s5">
+    <p class="center eyebrow" data-text="numbers.eyebrow"></p>
+    <div class="stats"></div>
+  </section>
+
+  <!-- 6 · Global -->
+  <section class="scene" id="s6">
+    <canvas id="globe" width="1080" height="1920"></canvas>
+    <p class="eyebrow grad" data-text="global.eyebrow"></p>
+    <p class="h1" data-rich="global.title"></p>
+    <p class="sub" data-text="global.sub"></p>
+  </section>
+
+  <!-- 7 · Bento recap -->
+  <section class="scene" id="s7">
+    <div class="bg"></div>
+    <p class="center eyebrow" data-text="summary.eyebrow"></p>
+    <p class="center h1" data-rich="summary.title"></p>
+    <div class="grid"></div>
+  </section>
+
+  <!-- 8 · End -->
+  <section class="scene" id="s8">
+    <div class="lock-wrap"><div class="lockup" data-w="860"></div></div>
+    <p class="center tag" data-text="ending.tagline"></p>
+    <p class="center eyebrow" data-text="ending.sub"></p>
+  </section>
+</div>
+
+<div id="ui"><span id="st">❚❚</span><div class="track" id="track"><i id="bar"></i></div><span id="tc">0.00s</span><span>Space 재생/정지 · R 처음부터 · ←/→ 1초 이동</span></div>
+
+<script>
+(() => {
+  const CFG = window.CONFIG;
+  const W = 1080, H = 1920, TAU = Math.PI * 2, D2R = Math.PI / 180;
+  const q = new URLSearchParams(location.search);
+  if (q.has('record')) document.body.classList.add('record');
+
+  /* ---------- fit stage ---------- */
+  const stage = document.getElementById('stage');
+  const fitStage = () => { const s = Math.min(innerWidth / W, innerHeight / H); stage.style.transform = `scale(${s}) translate(-50%, -50%)`; };
+  addEventListener('resize', fitStage); fitStage();
+
+  /* ---------- content from config.js ---------- */
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const get = path => path.split('.').reduce((o, k) => o[k], CFG);
+  // "채널은 [남습니다.]" → word spans; [ ] = yellow gradient, \n = line break
+  const rich = str => String(str).split('\n').map(line => (line.match(/\[[^\]]+\]|\S+/g) || [])
+    .map(tok => tok.startsWith('[') ? `<span class="w grad">${esc(tok.slice(1, -1))}</span>` : `<span class="w">${esc(tok)}</span>`).join(' ')).join('<br>');
+  document.querySelectorAll('[data-text]').forEach(el => { el.textContent = get(el.dataset.text); });
+  document.querySelectorAll('[data-rich]').forEach(el => { el.innerHTML = rich(get(el.dataset.rich)); });
+  const ms = (name, cls = '') => `<span class="ms ${cls}">${esc(name)}</span>`;
+
+  document.querySelector('#s3 .cards').innerHTML = CFG.purchase.cards.map(c =>
+    `<div class="card"><div class="ic">${ms(c.icon)}</div><b>${esc(c.title)}</b><span class="en">${esc(c.en)}</span></div>`).join('');
+
+  document.querySelector('#s5 .stats').innerHTML = CFG.numbers.stats.map((s, i) =>
+    (i ? '<div class="div"></div>' : '') +
+    `<div class="stat"><div class="num"><span class="count">0</span>${esc(s.suffix || '')}</div><div class="lab">${esc(s.ko)}<span class="en">${esc(s.en)}</span></div></div>`).join('');
+  const counters = [...document.querySelectorAll('#s5 .count')];
+
+  document.querySelector('#s7 .grid').innerHTML = CFG.summary.tiles.map(t => {
+    const cls = ['tile', t.style === 'dark' ? 'dark' : t.style === 'yellow' ? 'yel' : '', t.wide ? 'wide' : ''].join(' ');
+    const top = t.big ? `<div class="big">${esc(t.big)}</div>` : t.icon ? ms(t.icon, t.style === 'dark' ? 'grad' : '') : '<span></span>';
+    return `<div class="${cls}">${top}<div><b>${esc(t.title)}</b><small>${esc(t.en || '')}</small></div></div>`;
+  }).join('');
+
+  /* ---------- logo (260910_심볼+워드_SVG.svg) ---------- */
+  const SYMBOL_D = "M348.054 315.582C385.19 285.785 365.109 243.265 342.063 211.605C306.714 163.041 250.469 128.824 188.403 136.999C163.653 140.259 139.217 150.849 117.229 162.101L137.938 155.56C157.013 150.672 176.628 149.115 196.287 150.541L179.768 156.947C150.224 170.292 139.942 195.323 159.568 223.226C173.911 243.619 197.198 263.443 217.502 277.864C256.444 305.525 298.956 325.298 348.051 315.582C333.295 327.42 308.511 336.593 290.343 342.105C227.262 361.243 165.671 361.028 113.129 317.175C69.3198 280.611 41.5096 210.231 98.5363 171.106C121.251 155.521 151.969 141.291 177.041 129.289C214.628 111.292 266.27 86.2952 307.843 83.4341C368.546 79.2558 412.955 121.658 429.505 176.941C449.768 244.623 417.719 301.795 348.051 315.582H348.054Z";
+  const WORD_D = "M713.095 304.27H541.801V144.894H712.394C746.746 144.894 761.936 158.214 761.936 184.388C761.936 203.316 752.822 215.702 734.828 220.609C756.795 225.283 767.778 238.603 767.778 261.739C767.778 291.417 750.485 304.27 713.095 304.27ZM702.579 173.404H578.724V211.262H704.449C717.535 211.262 727.116 205.653 727.116 192.333C727.116 179.246 719.872 173.404 702.579 173.404ZM707.486 237.902H578.724V277.863H705.851C725.013 277.863 732.959 272.956 732.959 258C732.959 242.81 723.377 237.902 707.486 237.902ZM980.503 304.27H771.117V144.894H980.503V174.573H808.508V211.028H975.829V235.565H808.508V274.592H980.503V304.27ZM1189.82 304.27L1167.62 270.385H1037.46L1015.26 304.27H970.388L1077.89 144.894H1127.66L1235.16 304.27H1189.82ZM1054.98 243.978H1150.1L1102.66 171.535L1054.98 243.978ZM1397.96 220.609V144.894H1435.35V228.087C1435.35 282.771 1391.88 306.841 1322.48 306.841C1253.31 306.841 1209.84 282.771 1209.84 228.087V144.894H1247.23V220.609C1247.23 258.934 1270.6 274.825 1322.48 274.825C1374.59 274.825 1397.96 258.934 1397.96 220.609ZM1528.89 176.91H1433.32V144.894H1661.4V176.91H1566.28V304.27H1528.89V176.91ZM1755.16 243.044L1647.43 144.894H1695.57L1774.32 214.767L1852.84 144.894H1900.28L1792.55 243.277V304.27H1755.16V243.044ZM2000.92 307.308C1912.35 307.308 1872.86 281.836 1872.86 224.582C1872.86 167.328 1912.35 141.856 2000.92 141.856C2089.49 141.856 2128.98 167.328 2128.98 224.582C2128.98 281.836 2089.49 307.308 2000.92 307.308ZM2000.92 275.059C2069.39 275.059 2091.13 260.336 2091.13 224.582C2091.13 188.828 2069.39 174.105 2000.92 174.105C1932.45 174.105 1910.25 188.828 1910.25 224.582C1910.25 260.336 1932.45 275.059 2000.92 275.059ZM2170.03 304.27H2132.64V144.894H2288.74C2328 144.894 2352.54 159.149 2352.54 198.643C2352.54 232.995 2332.91 249.587 2296.69 251.69L2282.43 251.924L2295.99 260.804L2350.2 304.27H2302.76L2241.3 253.793H2170.03V304.27ZM2170.03 176.91V225.517H2285.47C2305.8 225.517 2313.98 218.74 2313.98 201.447C2313.98 183.453 2305.8 176.91 2285.47 176.91H2170.03ZM2555.45 304.27L2533.25 270.385H2403.09L2380.89 304.27H2336.02L2443.51 144.894H2493.29L2600.79 304.27H2555.45ZM2420.61 243.978H2515.72L2468.29 171.535L2420.61 243.978Z";
+  document.querySelectorAll('.lockup').forEach(el => {
+    const w = +el.dataset.w;
+    if (el.hasAttribute('data-sym-only')) {
+      el.insertAdjacentHTML('beforeend', `<svg class="sym" viewBox="40 78 412 290" style="width:${w}px;height:${w * 290 / 412}px"><path d="${SYMBOL_D}"/></svg>`);
+      return;
+    }
+    const s = w / 2565;
+    el.insertAdjacentHTML('beforeend',
+      `<svg class="sym" viewBox="40 78 412 290" style="width:${412 * s}px;height:${290 * s}px"><path d="${SYMBOL_D}"/></svg>` +
+      `<svg class="word" viewBox="530 135 2075 180" style="width:${2075 * s}px;height:${180 * s}px;margin-left:${78 * s}px"><path d="${WORD_D}"/></svg>`);
+    el.dataset.wordLeft = (412 + 78) * s;
+  });
+
+  /* ---------- channel orbit nodes ---------- */
+  const CH = CFG.channels.list;
+  const nodesEl = document.getElementById('nodes');
+  const nodes = CH.map(c => {
+    const n = document.createElement('div'); n.className = 'node';
+    n.innerHTML = `<div class="bubble">${ms(c.icon)}</div><span>${esc(c.name)}</span>`;
+    nodesEl.appendChild(n); return n;
+  });
+
+  /* ---------- globe ---------- */
+  const Y = window.CONFIG_RGB.yellow;                      // "241,235,156"
+  const gcv = document.getElementById('globe'), g = gcv.getContext('2d');
+  const GLOBE = [];
+  { const N = 2200, ga = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < N; i++) { const yy = 1 - 2 * (i + .5) / N, r = Math.sqrt(1 - yy * yy), a = i * ga; GLOBE.push([Math.cos(a) * r, yy, Math.sin(a) * r]); } }
+  const ll2v = (la, lo) => [Math.cos(la * D2R) * Math.sin(lo * D2R), -Math.sin(la * D2R), Math.cos(la * D2R) * Math.cos(lo * D2R)];
+  const ORIGIN = CFG.global.origin, KR = ll2v(ORIGIN.lat, ORIGIN.lon);
+  const LABEL = { 'right': [18, -12, 'left'], 'left': [-18, -10, 'right'], 'below-left': [-18, 24, 'right'], 'below-right': [18, 26, 'left'] };
+  const DEST = CFG.global.destinations.map(d => { const [ox, oy, al] = LABEL[d.label] || LABEL.right; return { n: d.name, v: ll2v(d.lat, d.lon), ox, oy, al }; });
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const pr = (t, a, b) => clamp((t - a) / (b - a));
+  const ioc = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  function slerp(a, b, u) {
+    const d = clamp(a[0] * b[0] + a[1] * b[1] + a[2] * b[2], -1, 1), w = Math.acos(d), s = Math.sin(w);
+    if (s < 1e-5) return a.slice();
+    const k1 = Math.sin((1 - u) * w) / s, k2 = Math.sin(u * w) / s;
+    return [a[0] * k1 + b[0] * k2, a[1] * k1 + b[1] * k2, a[2] * k1 + b[2] * k2];
+  }
+  function drawGlobe(lt, grow) {
+    g.clearRect(0, 0, W, H);
+    if (grow <= 0) return;
+    const gx = 540, gy = 1190, R = 380 * grow;
+    const c = (ORIGIN.lon + 23 - lt * 12) * D2R, tilt = -.5, cc = Math.cos(c), sc = Math.sin(c), ct = Math.cos(tilt), st = Math.sin(tilt);
+    const proj = (v, lift = 1) => {
+      const x1 = v[0] * cc - v[2] * sc, z1 = v[2] * cc + v[0] * sc, y = v[1] * ct - z1 * st, z = v[1] * st + z1 * ct;
+      const k = 1800 / (1800 - z * R * lift); return [gx + x1 * R * lift * k, gy + y * R * lift * k, z];
+    };
+    const halo = g.createRadialGradient(gx, gy, R * .85, gx, gy, R * 1.4);
+    halo.addColorStop(0, `rgba(${Y},.10)`); halo.addColorStop(1, `rgba(${Y},0)`);
+    g.fillStyle = halo; g.beginPath(); g.arc(gx, gy, R * 1.4, 0, TAU); g.fill();
+    for (const v of GLOBE) {
+      const [x, y, z] = proj(v);
+      if (z < 0) { g.fillStyle = 'rgba(255,255,255,.07)'; g.fillRect(x - .8, y - .8, 1.6, 1.6); }
+      else { const s = 1.6 + z * 1.6; g.fillStyle = `rgba(255,255,255,${.22 + .6 * z})`; g.beginPath(); g.arc(x, y, s / 2 + .3, 0, TAU); g.fill(); }
+    }
+    const [kx, ky] = proj(KR);
+    g.lineCap = 'round';
+    DEST.forEach((D, k) => {
+      const s = .8 + k * .2, q = ioc(pr(lt, s, s + .8));
+      if (q <= 0) return;
+      const ang = Math.acos(clamp(KR[0] * D.v[0] + KR[1] * D.v[1] + KR[2] * D.v[2], -1, 1));
+      let prev = null;
+      for (let i = 0; i <= 56; i++) {
+        const u = i / 56 * q, lift = 1 + (.03 + .12 * ang / Math.PI) * Math.sin(Math.PI * u);
+        const pt = proj(slerp(KR, D.v, u), lift);
+        if (prev) { g.strokeStyle = pt[2] > -.05 ? `rgb(${Y})` : `rgba(${Y},.25)`; g.lineWidth = 2.5; g.beginPath(); g.moveTo(prev[0], prev[1]); g.lineTo(pt[0], pt[1]); g.stroke(); }
+        prev = pt;
+      }
+      g.fillStyle = '#fff'; g.beginPath(); g.arc(prev[0], prev[1], 5, 0, TAU); g.fill();
+      const arr = lt - (s + .8);
+      if (arr > 0) {
+        const [dx, dy, dz] = proj(D.v);
+        if (arr < .7) { g.strokeStyle = `rgba(${Y},${1 - arr / .7})`; g.lineWidth = 2; g.beginPath(); g.arc(dx, dy, 6 + arr * 60, 0, TAU); g.stroke(); }
+        if (dz > -.1) {
+          g.font = '600 20px "Inter Tight"'; g.textAlign = D.al; g.fillStyle = `rgba(255,255,255,${Math.min(1, arr * 4) * .9})`;
+          g.fillText(D.n, dx + D.ox, dy + D.oy);
+        }
+      }
+    });
+    const pulse = .5 + .5 * Math.sin(lt * 7);
+    g.fillStyle = `rgb(${Y})`; g.beginPath(); g.arc(kx, ky, 8, 0, TAU); g.fill();
+    g.strokeStyle = `rgba(${Y},${.7 - pulse * .5})`; g.lineWidth = 2; g.beginPath(); g.arc(kx, ky, 14 + pulse * 10, 0, TAU); g.stroke();
+    g.font = '700 20px "Inter Tight"'; g.textAlign = 'left'; g.fillStyle = `rgba(255,255,255,${pr(lt, .5, .9)})`;
+    g.fillText(ORIGIN.name, kx + 16, ky - 16);
+  }
+
+  /* ---------- scene clock: every cue is relative to a scene's start (A) or end (Z) ---------- */
+  const LEN = ['opening', 'message', 'purchase', 'channels', 'numbers', 'global', 'summary', 'ending'].map(k => +CFG.durations[k]);
+  const START = LEN.map((_, i) => LEN.slice(0, i).reduce((a, b) => a + b, 0));
+  const TOTAL = START[7] + LEN[7];
+  const A = (n, o = 0) => Math.max(0, START[n] + o);
+  const Z = (n, o = 0) => START[n] + LEN[n] + o;
+
+  /* ---------- procedural state, driven by the master timeline ---------- */
+  const P = { orbit: 0, orbitAng: 0, count: 0, globe: 0 };
+  function frame() {
+    const t = tl.time();
+    if (t > A(3, -.5) && t < Z(3, .5)) {
+      nodes.forEach((n, i) => {
+        const a = i / CH.length * TAU + P.orbitAng, r = P.orbit;
+        const x = 540 + Math.cos(a) * 420 * r, y = 1060 + Math.sin(a) * 150 * r;
+        const depth = (Math.sin(a) + 1) / 2;
+        const s = (.68 + .42 * depth) * (.4 + .6 * r);
+        n.style.transform = `translate(${x}px, ${y}px) translate(-50%, -64px) scale(${s})`;
+        n.style.opacity = (.3 + .7 * depth) * Math.min(1, r * 1.4);
+        n.style.zIndex = depth > .5 ? 5 : 1;
+        n.style.filter = `blur(${(1 - depth) * 2.5}px)`;
+      });
+    }
+    counters.forEach((el, i) => { el.textContent = Math.round(CFG.numbers.stats[i].value * P.count); });
+    if (t > A(5, -.5) && t < Z(5, .5)) drawGlobe(t - START[5], P.globe);
+  }
+
+  /* =========================================================================
+     MASTER TIMELINE
+     ========================================================================= */
+  const tl = gsap.timeline({ paused: true, onUpdate: frame });
+  const ex = 'expo.out', blurIn = { opacity: 0, y: 40, filter: 'blur(18px)' }, sharp = { opacity: 1, y: 0, filter: 'blur(0px)' };
+  gsap.set('.scene', { autoAlpha: 0 });
+  const words = sel => gsap.utils.toArray(sel + ' .w');
+
+  /* 1 · Opening */
+  tl.set('#s1', { autoAlpha: 1 }, 0);
+  tl.fromTo('#aurora', { opacity: 0 }, { opacity: 1, duration: 2.4, ease: 'power2.out' }, 0);
+  tl.fromTo('#aurora .a1', { x: -120, scale: .8 }, { x: 140, scale: 1.1, duration: TOTAL, ease: 'none' }, 0);
+  tl.fromTo('#aurora .a2', { x: 100, y: 60 }, { x: -160, y: -40, duration: TOTAL, ease: 'none' }, 0);
+  tl.fromTo('#aurora .a3', { x: 0, y: 0 }, { x: 220, y: -120, duration: TOTAL, ease: 'none' }, 0);
+  const lock1 = document.querySelector('#s1 .lockup'), wl = +lock1.dataset.wordLeft;
+  tl.fromTo('#s1 .sym', { scale: .55, rotation: -40, opacity: 0, filter: 'blur(30px)' }, { scale: 1, rotation: 0, opacity: 1, filter: 'blur(0px)', duration: 1.5, ease: ex, transformOrigin: '50% 50%' }, A(0, .2));
+  tl.fromTo('#s1 .word', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.1, ease: 'power3.inOut' }, A(0, 1.0));
+  tl.fromTo('#s1 .sweep', { left: wl, opacity: 0 }, { left: 900, duration: 1.1, ease: 'power3.inOut' }, A(0, 1.0));
+  tl.to('#s1 .sweep', { opacity: 1, duration: .15 }, A(0, 1.0)).to('#s1 .sweep', { opacity: 0, duration: .3 }, A(0, 1.95));
+  tl.fromTo('#s1 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(0, 1.7));
+  tl.fromTo('#s1 .ko', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(0, 1.9));
+  tl.to('#s1', { scale: 1.08, filter: 'blur(16px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, Z(0, -.5));
+
+  /* 2 · Statement */
+  tl.set('#s2', { autoAlpha: 1 }, A(1, -.1));
+  tl.to('#aurora', { opacity: .45, duration: 1 }, A(1, -.1));
+  tl.fromTo(words('#s2 .l1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .12 }, A(1, .05));
+  tl.to('#s2 .l1', { color: '#48484a', duration: .8, ease: 'power2.out' }, A(1, 1.5));
+  tl.fromTo(words('#s2 .l2'), { opacity: 0, y: 40, filter: 'blur(18px)', scale: .96 }, { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, duration: 1.1, ease: ex, stagger: .16 }, A(1, 1.55));
+  tl.fromTo('#s2 .sub', blurIn, { ...sharp, duration: 1, ease: ex }, A(1, 2.3));
+  tl.to('#s2', { scale: .94, filter: 'blur(14px)', autoAlpha: 0, duration: .6, ease: 'power2.in' }, Z(1, -.5));
+
+  /* 3 · Direct purchase */
+  tl.fromTo('#s3', { autoAlpha: 1, clipPath: 'circle(0% at 50% 55%)' }, { clipPath: 'circle(130% at 50% 55%)', duration: 1.0, ease: 'expo.inOut' }, A(2, -.45));
+  tl.fromTo('#s3 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(2, .1));
+  tl.fromTo(words('#s3 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .09 }, A(2, .2));
+  tl.fromTo('#s3 .card', { opacity: 0, y: 160, rotationX: -38, filter: 'blur(12px)' }, { opacity: 1, y: 0, rotationX: 0, filter: 'blur(0px)', duration: 1.2, ease: ex, stagger: .13, transformOrigin: '50% 100%' }, A(2, .8));
+  tl.fromTo('#s3 .ic', { scale: .4 }, { scale: 1, duration: .9, ease: 'back.out(2.2)', stagger: .13 }, A(2, 1.1));
+  tl.fromTo('#s3 .ic .ms', { rotation: -90, opacity: 0 }, { rotation: 0, opacity: 1, duration: .9, ease: ex, stagger: .13 }, A(2, 1.2));
+  tl.to('#s3 .cards', { y: -14, duration: Math.max(.5, LEN[2] - 2.6), ease: 'sine.inOut' }, A(2, 1.9));
+  tl.to('#s3 .card', { y: -60, opacity: 0, filter: 'blur(10px)', duration: .5, ease: 'power2.in', stagger: .06 }, Z(2, -.65));
+  tl.to(['#s3 .h1', '#s3 .eyebrow'], { y: -40, opacity: 0, duration: .5, ease: 'power2.in' }, Z(2, -.55));
+  tl.to('#s3', { autoAlpha: 0, duration: .4 }, Z(2, -.3));
+
+  /* 4 · Channel orbit */
+  tl.set('#s4', { autoAlpha: 1 }, A(3, -.2));
+  tl.to('#aurora', { opacity: .7, duration: 1 }, A(3, -.3));
+  tl.fromTo('#s4 .ring', { strokeDasharray: 4200, strokeDashoffset: 4200 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut', stagger: .15 }, A(3, -.1));
+  tl.fromTo('#s4 .glow', { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: 1.4, ease: ex }, A(3, 0));
+  tl.fromTo('#s4 .core', { opacity: 0, scale: .4, rotation: -60, filter: 'blur(20px)' }, { opacity: 1, scale: 1, rotation: 0, filter: 'blur(0px)', duration: 1.3, ease: ex }, A(3, .05));
+  tl.fromTo(P, { orbit: 0 }, { orbit: 1, duration: 1.5, ease: ex }, A(3, .3));
+  tl.fromTo(P, { orbitAng: -.6 }, { orbitAng: 1.6, duration: LEN[3] + .2, ease: 'power1.inOut' }, A(3, -.2));
+  tl.fromTo('#s4 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(3, .1));
+  tl.fromTo(words('#s4 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .12 }, A(3, .25));
+  tl.to(P, { orbit: 0, duration: .5, ease: 'expo.in' }, Z(3, -.55));
+  tl.to(['#s4 .h1', '#s4 .eyebrow', '#s4 .rings'], { opacity: 0, duration: .4 }, Z(3, -.5));
+  tl.to('#s4 .core', { scale: 3, opacity: 0, duration: .5, ease: 'expo.in' }, Z(3, -.45));
+
+  /* 5 · Numbers */
+  tl.fromTo('#s5', { autoAlpha: 1, clipPath: 'circle(0% at 50% 55%)' }, { clipPath: 'circle(130% at 50% 55%)', duration: .9, ease: 'expo.inOut' }, A(4, -.25));
+  tl.set('#s4', { autoAlpha: 0 }, A(4, .7));
+  tl.fromTo('#s5', { backgroundPosition: '0% 0%' }, { backgroundPosition: '100% 100%', duration: LEN[4] + .4, ease: 'none' }, A(4, -.25));
+  tl.fromTo('#s5 .eyebrow', blurIn, { ...sharp, duration: .8, ease: ex }, A(4, .1));
+  tl.fromTo('#s5 .stat', { opacity: 0, y: 90, filter: 'blur(16px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: .12 }, A(4, .1));
+  tl.fromTo('#s5 .div', { scaleX: 0 }, { scaleX: 1, duration: .9, ease: ex }, A(4, .4));
+  tl.fromTo(P, { count: 0 }, { count: 1, duration: 1.6, ease: 'power3.out' }, A(4, .15));
+  tl.to('#s5 .stat', { y: -70, opacity: 0, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: .06 }, Z(4, -.5));
+  tl.to('#s5', { autoAlpha: 0, duration: .45 }, Z(4, -.3));
+
+  /* 6 · Global */
+  tl.set('#s6', { autoAlpha: 1 }, A(5, -.2));
+  tl.to('#aurora', { opacity: .4, duration: 1 }, A(5, -.2));
+  tl.fromTo(P, { globe: 0 }, { globe: 1, duration: 1.4, ease: ex }, A(5, -.1));
+  tl.fromTo('#s6 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(5, .1));
+  tl.fromTo(words('#s6 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .18 }, A(5, .2));
+  tl.fromTo('#s6 .sub', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(5, .8));
+  tl.to(P, { globe: 2.6, duration: .7, ease: 'expo.in' }, Z(5, -.7));
+  tl.to(['#s6 .h1', '#s6 .eyebrow', '#s6 .sub'], { opacity: 0, x: -40, duration: .45, ease: 'power2.in' }, Z(5, -.7));
+  tl.to('#s6', { autoAlpha: 0, duration: .35 }, Z(5, -.25));
+
+  /* 7 · Bento */
+  tl.set('#s7', { autoAlpha: 1 }, A(6, -.3));
+  tl.fromTo('#s7 .bg', { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' }, A(6, -.3));
+  tl.fromTo('#s7 .eyebrow', blurIn, { ...sharp, duration: .9, ease: ex }, A(6, 0));
+  tl.fromTo(words('#s7 .h1'), blurIn, { ...sharp, duration: 1.0, ease: ex, stagger: .1 }, A(6, .1));
+  tl.fromTo('#s7 .tile', { opacity: 0, scale: .82, y: 60, filter: 'blur(14px)' }, { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: ex, stagger: { each: .08, from: 'center' } }, A(6, .45));
+  tl.fromTo('#s7 .tile .ms', { scale: .3, rotation: -45 }, { scale: 1, rotation: 0, duration: 1, ease: 'back.out(2)', stagger: .1 }, A(6, .8));
+  tl.fromTo('#s7 .grid', { scale: 1 }, { scale: 1.035, duration: Math.max(.5, LEN[6] - 1.2), ease: 'sine.inOut' }, A(6, .6));
+  tl.to('#s7 .tile', { opacity: 0, scale: .9, filter: 'blur(12px)', duration: .5, ease: 'power2.in', stagger: { each: .04, from: 'edges' } }, Z(6, -.7));
+  tl.to(['#s7 .h1', '#s7 .eyebrow'], { opacity: 0, y: -30, duration: .45, ease: 'power2.in' }, Z(6, -.65));
+  tl.to('#s7 .bg', { opacity: 0, duration: .5 }, Z(6, -.4));
+  tl.set('#s7', { autoAlpha: 0 }, Z(6, .1));
+
+  /* 8 · End */
+  tl.set('#s8', { autoAlpha: 1 }, A(7, -.1));
+  tl.to('#aurora', { opacity: 1, duration: 1.4 }, A(7, -.2));
+  tl.fromTo('#s8 .lockup', { opacity: 0, scale: 1.12, filter: 'blur(26px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.6, ease: ex }, A(7, .1));
+  tl.fromTo('#s8 .tag', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(7, .9));
+  tl.fromTo('#s8 .eyebrow', blurIn, { ...sharp, duration: 1.0, ease: ex }, A(7, 1.2));
+  tl.to(['#s8', '#aurora'], { opacity: 0, duration: .8, ease: 'power2.in' }, Z(7, -.8));
+  tl.set({}, {}, TOTAL);
+
+  /* ---------- playback ---------- */
+  const D = tl.duration();
+  window.__timeline = tl; window.DURATION = D;
+  window.renderAt = t => { tl.seek(((t % D) + D) % D); frame(); };
+  const bar = document.getElementById('bar'), tc = document.getElementById('tc'), st = document.getElementById('st'), ui = document.getElementById('ui');
+  gsap.ticker.add(() => { bar.style.width = (tl.time() / D * 100) + '%'; tc.textContent = tl.time().toFixed(2) + 's / ' + D.toFixed(1) + 's'; });
+  tl.eventCallback('onComplete', () => tl.restart());
+  const toggle = () => { tl.paused() ? tl.play() : tl.pause(); st.textContent = tl.paused() ? '▶' : '❚❚'; };
+  addEventListener('keydown', e => {
+    if (e.code === 'Space') { e.preventDefault(); toggle(); }
+    if (e.key === 'r' || e.key === 'R') tl.restart();
+    if (e.key === 'ArrowRight') tl.seek(Math.min(D - .01, tl.time() + 1));
+    if (e.key === 'ArrowLeft') tl.seek(Math.max(0, tl.time() - 1));
+  });
+  document.getElementById('track').addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); tl.seek((e.clientX - r.left) / r.width * D); });
+  let idle; const wake = () => { ui.classList.remove('hide'); clearTimeout(idle); idle = setTimeout(() => ui.classList.add('hide'), 2000); };
+  addEventListener('mousemove', wake); wake();
+
+  const fonts = ['800 100px Pretendard', '700 100px Pretendard', '600 100px Pretendard', '500 100px Pretendard',
+                 '700 100px "Inter Tight"', '600 100px "Inter Tight"', '500 100px "Inter Tight"', '48px "Material Symbols Rounded"'];
+  Promise.race([Promise.all(fonts.map(f => document.fonts.load(f, f.includes('Material') ? CH[0].icon : '가A'))), new Promise(r => setTimeout(r, 5000))]).then(() => {
+    if (q.has('t')) { renderAt(parseFloat(q.get('t'))); st.textContent = '▶'; }
+    else tl.play(0);
+  });
+})();
+</script>
+</body>
+</html>
