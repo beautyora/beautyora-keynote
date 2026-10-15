@@ -5,7 +5,8 @@
 
    작성 규칙
    - 문구는 따옴표 ' ' 안의 글자만 바꿔주세요. 따옴표와 쉼표는 지우지 마세요.
-   - [대괄호]로 감싼 부분은 옐로우 그라데이션 강조색이 됩니다.  예) '채널은 [남습니다.]'
+   - [대괄호]로 감싼 부분은 옐로우 그라데이션 강조색이 됩니다.  예) '이제 [채널]이 찾아갑니다.'
+     (강조 뒤에 조사를 바로 붙여도 됩니다: [채널]이, [팔 곳]을)
    - \n 은 줄바꿈입니다.  예) '국내에서\n[해외까지.]'
    - 아이콘 이름은 https://fonts.google.com/icons 에서 검색한 이름을 그대로 넣으세요.
      (예: storefront, local_pharmacy) — 새 아이콘도 자동으로 불러옵니다.
@@ -51,26 +52,26 @@ window.CONFIG = {
 
   /* 2 · 메시지 ---------------------------------------------------------------- */
   message: {
-    line1: '광고비는 멈추면 사라집니다.',
-    line2: '채널은 [남습니다.]',
-    sub:   'Ads fade. Channels stay.',
+    line1: '좋은 제품은 많은데,\n팔 곳이 없었죠.',
+    line2: '이제 [채널]이 찾아갑니다.',
+    sub:   'Great products deserve more shelves.',
   },
 
   /* 3 · 직접 매입 ------------------------------------------------------------- */
   purchase: {
     eyebrow: 'Direct Purchase',
-    title:   '뷰티오라는 상품을\n직접 매입합니다.',
+    title:   '팔릴지 걱정하기 전에,\n뷰티오라가 [먼저 삽니다.]',
     cards: [
-      { icon: 'payments',    title: '즉시 매출',        en: 'Instant revenue' },
-      { icon: 'inventory_2', title: '재고 리스크 분담', en: 'Shared inventory risk' },
-      { icon: 'hub',         title: '채널 분산 판매',   en: 'Multi-channel sales' },
+      { icon: 'payments',    title: '매입 즉시 매출',     en: 'Instant revenue' },
+      { icon: 'inventory_2', title: '재고 부담은 함께',   en: 'Shared inventory risk' },
+      { icon: 'hub',         title: '판로는 여러 곳으로', en: 'Multi-channel sales' },
     ],
   },
 
   /* 4 · 채널 ------------------------------------------------------------------ */
   channels: {
     eyebrow: 'Channel Network',
-    title:   '오프라인은 판매, [온라인은 확산.]',
+    title:   '약국부터 라이브커머스까지,\n[팔 곳]을 넓힙니다.',
     list: [
       { icon: 'local_pharmacy', name: '약국' },
       { icon: 'storefront',     name: '백화점 · 편집숍' },
@@ -95,7 +96,7 @@ window.CONFIG = {
   /* 6 · 글로벌 ---------------------------------------------------------------- */
   global: {
     eyebrow: 'Global',
-    title:   '국내에서\n[해외까지.]',
+    title:   '한국을 넘어,\n[해외 판로까지.]',
     sub:     '일본 · 중국 · 홍콩 · 대만 · 미국 · 유럽',
     origin:  { name: 'Korea', lat: 37.5, lon: 127 },
     // label 위치: 'right' | 'left' | 'below-right' | 'below-left'
@@ -116,9 +117,9 @@ window.CONFIG = {
      칸은 위 4칸 + 아래 4칸 기준입니다. (wide 는 2칸으로 계산)            */
   summary: {
     eyebrow: 'All in One',
-    title:   '브랜드와 채널 사이, 뷰티오라.',
+    title:   '브랜드는 [제품에만] 집중하세요.',
     tiles: [
-      { style: 'dark',   wide: true, icon: 'handshake', title: '상품을 직접 매입합니다', en: 'Direct purchase' },
+      { style: 'dark',   wide: true, icon: 'handshake', title: '팔릴 걱정 없이, 직접 매입', en: 'Direct purchase' },
       { style: 'yellow', big: '200+', title: '브랜드', en: 'Brands' },
       { style: 'white',  big: '800+', title: '상품',   en: 'Products' },
       { style: 'white',  icon: 'storefront', title: '오프라인 판매', en: 'Offline sales' },
@@ -129,7 +130,7 @@ window.CONFIG = {
 
   /* 8 · 엔딩 ------------------------------------------------------------------ */
   ending: {
-    tagline: '브랜드와 채널 사이를 설계합니다.',
+    tagline: '좋은 제품이 더 많은 곳에 닿도록.',
     sub:     'Beauty Distribution Network',
   },
 };

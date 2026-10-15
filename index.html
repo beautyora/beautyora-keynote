@@ -89,9 +89,16 @@
   #s1 .ko { top: 700px; color: var(--gray-light); opacity: .85; font-size: 26px; font-weight: 500; letter-spacing: .02em; }
 
   /* S2 */
-  #s2 .l1 { top: 330px; font-size: 112px; }
+  #s2 .l1 { top: 250px; font-size: 84px; }
   #s2 .l2 { top: 500px; font-size: 112px; }
   #s2 .sub { top: 700px; font-size: 34px; font-weight: 500; color: var(--gray); }
+
+
+  /* 밝은 배경 장면의 [강조]: 옐로우 형광펜 밑줄 */
+  #s3 .h1 .grad, #s7 .h1 .grad {
+    color: var(--ink); -webkit-background-clip: border-box; background-clip: border-box;
+    background: linear-gradient(transparent 60%, var(--y2) 60%, var(--y2) 94%, transparent 94%);
+  }
 
   /* S3 */
   #s3 { background: var(--light); color: var(--ink); }
@@ -261,8 +268,9 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const get = path => path.split('.').reduce((o, k) => o[k], CFG);
   // "채널은 [남습니다.]" → word spans; [ ] = yellow gradient, \n = line break
-  const rich = str => String(str).split('\n').map(line => (line.match(/\[[^\]]+\]|\S+/g) || [])
-    .map(tok => tok.startsWith('[') ? `<span class="w grad">${esc(tok.slice(1, -1))}</span>` : `<span class="w">${esc(tok)}</span>`).join(' ')).join('<br>');
+  // 단어 단위로 등장; [강조] 바로 뒤에 붙은 조사도 한 단어로 처리 (예: [채널]이)
+  const rich = str => String(str).split('\n').map(line => (line.match(/(?:\[[^\]]*\]|[^\s\[])+/g) || [])
+    .map(tok => '<span class="w">' + tok.split(/(\[[^\]]*\])/).map(p => p.startsWith('[') ? '<span class="grad">' + esc(p.slice(1, -1)) + '</span>' : esc(p)).join('') + '</span>').join(' ')).join('<br>');
   document.querySelectorAll('[data-text]').forEach(el => { el.textContent = get(el.dataset.text); });
   document.querySelectorAll('[data-rich]').forEach(el => { el.innerHTML = rich(get(el.dataset.rich)); });
   const ms = (name, cls = '') => `<span class="ms ${cls}">${esc(name)}</span>`;
